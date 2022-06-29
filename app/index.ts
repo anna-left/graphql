@@ -2,7 +2,9 @@ import { ApolloServer } from "apollo-server";
 import { typeDefs } from "./schema";
 import { resolvers } from "./resolvers";
 
-import { GenreAPI } from "./datasources/genre-api";
+import { GenreAPI } from "./modules/genres/genre-api";
+import { UserAPI } from "./modules/users/user-api";
+import { BandAPI } from "./modules/bands/band-api";
 
 const server = new ApolloServer({
   typeDefs,
@@ -10,6 +12,8 @@ const server = new ApolloServer({
   dataSources: () => {
     return {
       genreAPI: new GenreAPI(),
+      userAPI: new UserAPI(),
+      bandAPI: new BandAPI(),
     };
   },
 });
