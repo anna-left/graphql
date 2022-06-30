@@ -16,7 +16,6 @@ class ArtistAPI extends RESTDataSource {
   }
 
   async getArtist(artistID: string) {
-    console.log(this.get(`artists/${artistID}`));
     const data = await this.get(`artists/${artistID}`);
     return { ...data, id: data._id };
   }

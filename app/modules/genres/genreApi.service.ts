@@ -3,10 +3,9 @@ import { RESTDataSource } from "apollo-datasource-rest";
 import { IGenre } from "./genre.interface";
 
 class GenreAPI extends RESTDataSource {
-  PORT = Number(process.env.GENRE_PORT) || 3007;
+  PORT = Number(process.env.GENRE_PORT) || 3001;
   constructor() {
     super();
-    // this.baseURL = "http://localhost:3001/v1/";
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
@@ -16,8 +15,11 @@ class GenreAPI extends RESTDataSource {
   }
 
   async getGenre(genreID: string) {
-    console.log(this.get(`genres/${genreID}`));
     const data = await this.get(`genres/${genreID}`);
+    if (!data) {
+      console.log(`genre ID ${genreID} isn't correct`);
+      return;
+    }
     return { ...data, id: data._id };
   }
 }

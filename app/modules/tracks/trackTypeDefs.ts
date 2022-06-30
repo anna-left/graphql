@@ -8,7 +8,7 @@ export default gql`
     bands: [Band]
     duration: Int
     released: Int
-    genresIds: [String]
+    genres: [Genre]
   }
 
   extend type Query {

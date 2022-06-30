@@ -6,7 +6,6 @@ class BandAPI extends RESTDataSource {
   PORT = Number(process.env.BAND_PORT) || 3003;
   constructor() {
     super();
-    // this.baseURL = "http://localhost:3003/v1/";
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
@@ -16,8 +15,11 @@ class BandAPI extends RESTDataSource {
   }
 
   async getBand(bandID: string) {
-    console.log(this.get(`bands/${bandID}`));
     const data = await this.get(`bands/${bandID}`);
+    if (!data) {
+      console.log(`band ID ${bandID} isn't correct`);
+      return;
+    }
     return { ...data, id: data._id };
   }
 }

@@ -1,14 +1,15 @@
+import "dotenv/config";
 import { RESTDataSource } from "apollo-datasource-rest";
 import { IUser } from "./user.interface";
 
 class UserAPI extends RESTDataSource {
+  PORT = Number(process.env.USER_PORT) || 3004;
   constructor() {
     super();
-    this.baseURL = "http://localhost:3004/v1/";
+    this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
   async getUser(userID: string) {
-    console.log(this.get(`users/${userID}`));
     const data: IUser = await this.get(`users/${userID}`);
     return { ...data, id: data._id };
   }
