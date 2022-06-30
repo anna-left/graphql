@@ -5,7 +5,7 @@ export default gql`
     id: ID!
     name: String
     origin: String
-    # members: [Member]
+    members: [Artist]
     website: String
     genres: String
   }

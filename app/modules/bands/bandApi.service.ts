@@ -1,10 +1,13 @@
+import "dotenv/config";
 import { RESTDataSource } from "apollo-datasource-rest";
 import { IBand } from "./band.interface";
 
 class BandAPI extends RESTDataSource {
+  PORT = Number(process.env.BAND_PORT) || 3003;
   constructor() {
     super();
-    this.baseURL = "http://localhost:3003/v1/";
+    // this.baseURL = "http://localhost:3003/v1/";
+    this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
   async getBands() {
