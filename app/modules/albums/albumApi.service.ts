@@ -6,7 +6,6 @@ class AlbumAPI extends RESTDataSource {
   PORT = Number(process.env.ALBUM_PORT) || 3005;
   constructor() {
     super();
-    // this.baseURL = "http://localhost:3003/v1/";
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
@@ -17,6 +16,10 @@ class AlbumAPI extends RESTDataSource {
 
   async getAlbum(albumID: string) {
     const data = await this.get(`albums/${albumID}`);
+    if (!data) {
+      console.log(`album ID ${albumID} isn't correct`);
+      return;
+    }
     return { ...data, id: data._id };
   }
 }

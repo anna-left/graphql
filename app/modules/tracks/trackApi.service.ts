@@ -6,7 +6,6 @@ class TrackAPI extends RESTDataSource {
   PORT = Number(process.env.TRACK_PORT) || 3006;
   constructor() {
     super();
-    // this.baseURL = "http://localhost:3006/v1/";
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
@@ -17,6 +16,10 @@ class TrackAPI extends RESTDataSource {
 
   async getTrack(trackID: string) {
     const data = await this.get(`tracks/${trackID}`);
+    if (!data) {
+      console.log(`track ID ${trackID} isn't correct`);
+      return;
+    }
     return { ...data, id: data._id };
   }
 }

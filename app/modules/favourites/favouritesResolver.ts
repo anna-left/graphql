@@ -2,20 +2,24 @@ import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
 
-const albumResolver = {
+const favouriteResolver = {
   Query: {
-    albums: (_: string, __: string, { dataSources }: { dataSources: any }) => {
-      return dataSources.albumAPI.getAlbums();
+    favourites: (
+      _: string,
+      __: string,
+      { dataSources }: { dataSources: any }
+    ) => {
+      return dataSources.favouriteAPI.getFavourites();
     },
-    album: (
+    favourite: (
       _: string,
       { id }: { id: string },
       { dataSources }: { dataSources: any }
     ) => {
-      return dataSources.albumAPI.getAlbum(id);
+      return dataSources.favouriteAPI.getFavourite(id);
     },
   },
-  Album: {
+  Favourite: {
     genres: (
       { genresIds }: { genresIds: string[] },
       _: string,
@@ -63,4 +67,4 @@ const albumResolver = {
   },
 };
 
-export { albumResolver };
+export { favouriteResolver };

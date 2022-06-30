@@ -20,22 +20,22 @@ const trackResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
-      const arrGenres: IGenre[] = [];
+      const arrPromises: IGenre[] = [];
       for (let i = 0; i < genresIds.length; i++) {
-        arrGenres.push(dataSources.genreAPI.getGenre(genresIds[i]));
+        arrPromises.push(dataSources.genreAPI.getGenre(genresIds[i]));
       }
-      return Promise.all(arrGenres);
+      return Promise.all(arrPromises);
     },
     bands: (
       { bandsIds }: { bandsIds: string[] },
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
-      const arrBands: IBand[] = [];
+      const arrPromises: IBand[] = [];
       for (let i = 0; i < bandsIds.length; i++) {
-        arrBands.push(dataSources.bandAPI.getBand(bandsIds[i]));
+        arrPromises.push(dataSources.bandAPI.getBand(bandsIds[i]));
       }
-      return Promise.all(arrBands);
+      return Promise.all(arrPromises);
     },
   },
 };

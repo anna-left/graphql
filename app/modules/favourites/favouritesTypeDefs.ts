@@ -1,18 +1,17 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type Track {
+  type Favourite {
     id: ID!
-    title: String!
-    albums: [Album]
+    userId: ID!
     bands: [Band]
-    duration: Int
-    released: Int
     genres: [Genre]
+    artists: [Artist]
+    tracks: [Track]
   }
 
   extend type Query {
-    tracks: [Track!]!
-    track(id: ID!): Track!
+    favourites: [Favourite!]!
+    favourite(id: ID!): Favourite!
   }
 `;

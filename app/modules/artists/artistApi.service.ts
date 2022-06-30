@@ -6,7 +6,6 @@ class ArtistAPI extends RESTDataSource {
   PORT = Number(process.env.ARTIST_PORT) || 3002;
   constructor() {
     super();
-    // this.baseURL = "http://localhost:3002/v1/";
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
@@ -17,6 +16,10 @@ class ArtistAPI extends RESTDataSource {
 
   async getArtist(artistID: string) {
     const data = await this.get(`artists/${artistID}`);
+    if (!data) {
+      console.log(`artist ID ${artistID} isn't correct`);
+      return;
+    }
     return { ...data, id: data._id };
   }
 }
