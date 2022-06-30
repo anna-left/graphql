@@ -32,9 +32,7 @@ const trackResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       const arrBands: IBand[] = [];
-      console.log(bandsIds);
       for (let i = 0; i < bandsIds.length; i++) {
-        console.log(bandsIds[i]);
         arrBands.push(dataSources.bandAPI.getBand(bandsIds[i]));
       }
       return Promise.all(arrBands);
