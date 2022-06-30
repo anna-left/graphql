@@ -1,5 +1,5 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import { IBand } from "./interface-band";
+import { IBand } from "./band.interface";
 
 class BandAPI extends RESTDataSource {
   constructor() {

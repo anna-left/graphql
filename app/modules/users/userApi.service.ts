@@ -1,5 +1,5 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import { IUser } from "./interface-user";
+import { IUser } from "./user.interface";
 
 class UserAPI extends RESTDataSource {
   constructor() {
