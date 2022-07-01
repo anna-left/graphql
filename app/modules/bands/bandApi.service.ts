@@ -15,12 +15,12 @@ class BandAPI extends RESTDataSource {
   }
 
   async getBand(bandID: string) {
-    const data = await this.get(`bands/${bandID}`);
+    const { members, ...data } = await this.get(`bands/${bandID}`);
     if (!data) {
       console.log(`band ID ${bandID} isn't correct`);
       return;
     }
-    return { ...data, id: data._id };
+    return { ...data, id: data._id, membersId: members };
   }
 }
 

@@ -11,6 +11,10 @@ class UserAPI extends RESTDataSource {
 
   async getUser(userID: string) {
     const data: IUser = await this.get(`users/${userID}`);
+    if (!data) {
+      console.log(`user ID ${userID} isn't correct`);
+      return;
+    }
     return { ...data, id: data._id };
   }
 }
