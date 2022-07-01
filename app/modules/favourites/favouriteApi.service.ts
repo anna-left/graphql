@@ -1,15 +1,15 @@
 import "dotenv/config";
 import { RESTDataSource } from "apollo-datasource-rest";
-import { IFavourite } from "./favourites.interface";
+import { IFavourite } from "./favourite.interface";
 
-class IFavouriteAPI extends RESTDataSource {
+class FavouriteAPI extends RESTDataSource {
   PORT = Number(process.env.FAVOURITE_PORT) || 3007;
   constructor() {
     super();
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
-  async getIFavourites() {
+  async getFavourites() {
     const data = await this.get("favourites");
     return data.items.map((item: IFavourite) => ({ ...item, id: item._id }));
   }
@@ -24,4 +24,4 @@ class IFavouriteAPI extends RESTDataSource {
   }
 }
 
-export { IFavouriteAPI };
+export { FavouriteAPI };

@@ -7,6 +7,7 @@ import { userResolver } from "./modules/users/userResolver";
 import { artistResolver } from "./modules/artists/artistResolver";
 import { trackResolver } from "./modules/tracks/trackResolver";
 import { albumResolver } from "./modules/albums/albumResolver";
+import { favouriteResolver } from "./modules/favourites/favouriteResolver";
 
 import { GenreAPI } from "./modules/genres/genreApi.service";
 import { UserAPI } from "./modules/users/userApi.service";
@@ -14,6 +15,7 @@ import { BandAPI } from "./modules/bands/bandApi.service";
 import { ArtistAPI } from "./modules/artists/artistApi.service";
 import { TrackAPI } from "./modules/tracks/trackApi.service";
 import { AlbumAPI } from "./modules/albums/albumApi.service";
+import { FavouriteAPI } from "./modules/favourites/favouriteApi.service";
 
 import genreTypeDefs from "./modules/genres/genreTypeDefs";
 import userTypeDefs from "./modules/users/userTypeDefs";
@@ -21,6 +23,7 @@ import bandTypeDefs from "./modules/bands/bandTypeDefs";
 import artistTypeDefs from "./modules/artists/artistTypeDefs";
 import trackTypeDefs from "./modules/tracks/trackTypeDefs";
 import albumTypeDefs from "./modules/albums/albumTypeDefs";
+import favouriteTypeDefs from "./modules/favourites/favouriteTypeDefs";
 
 const server = new ApolloServer({
   typeDefs: [
@@ -30,6 +33,7 @@ const server = new ApolloServer({
     artistTypeDefs,
     trackTypeDefs,
     albumTypeDefs,
+    favouriteTypeDefs,
   ],
   resolvers: merge(
     bandResolver,
@@ -37,7 +41,8 @@ const server = new ApolloServer({
     userResolver,
     artistResolver,
     trackResolver,
-    albumResolver
+    albumResolver,
+    favouriteResolver
   ),
   dataSources: () => {
     return {
@@ -47,6 +52,7 @@ const server = new ApolloServer({
       artistAPI: new ArtistAPI(),
       trackAPI: new TrackAPI(),
       albumAPI: new AlbumAPI(),
+      favouriteAPI: new FavouriteAPI(),
     };
   },
 });

@@ -9,6 +9,7 @@ const favouriteResolver = {
       __: string,
       { dataSources }: { dataSources: any }
     ) => {
+      console.log("---resolver");
       return dataSources.favouriteAPI.getFavourites();
     },
     favourite: (
