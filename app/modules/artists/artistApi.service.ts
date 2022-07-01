@@ -11,7 +11,11 @@ class ArtistAPI extends RESTDataSource {
 
   async getArtists() {
     const data = await this.get("artists");
-    return data.items.map((item: IArtist) => ({ ...item, id: item._id }));
+    return data.items.map((item: IArtist) => ({
+      ...item,
+      id: item._id,
+      instruments: item.instruments.join(" "),
+    }));
   }
 
   async getArtist(artistID: string) {
