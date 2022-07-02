@@ -17,6 +17,19 @@ class UserAPI extends RESTDataSource {
     }
     return { ...data, id: data._id };
   }
+
+  async registerUser(user: IUser) {
+    console.log("user ---", user);
+    const qq = {
+      firstName: "first name",
+      lastName: "last name",
+      password: "saaa222aaa",
+      email: "saaa@mail.ru",
+    };
+    const data = await this.post("users/register", qq);
+    console.log("---data", data);
+    return { ...data, id: data._id };
+  }
 }
 
 export { UserAPI };

@@ -1,5 +1,8 @@
+import "dotenv/config";
+// import { ApolloServer, AuthenticationError } from "apollo-server";
 import { ApolloServer } from "apollo-server";
 import merge from "lodash/merge";
+// import axios from "axios";
 
 import { bandResolver } from "./modules/bands/bandResolver";
 import { genreResolver } from "./modules/genres/genreResolver";
@@ -54,6 +57,26 @@ const server = new ApolloServer({
       albumAPI: new AlbumAPI(),
       favouriteAPI: new FavouriteAPI(),
     };
+  },
+  context: async ({ req }) => {
+    const token = req.headers.authorization || "";
+    const userId = token.split(" ")[1]; // get the user name after 'Bearer '
+    // console.log("token-------", token);
+    return;
+    console.log("userId-------", userId);
+    // if (userId) {
+    //   const PORT = Number(process.env.USER_PORT) || 3004;
+    //   const { data } = await axios
+    //     .get(`http://localhost:${PORT}/login/${userId}`)
+    //     .catch((error) => {
+    //       console.log("-----error", error);
+    //       // throw new AuthenticationError(error.message);
+    //     });
+    //   console.log("---data", data);
+    //   console.log("---data", data.id);
+    //   console.log("---data", data.role);
+    //   return { userId: data.id, userRole: data.role };
+    // }
   },
 });
 
