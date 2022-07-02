@@ -61,8 +61,9 @@ const server = new ApolloServer({
   context: async ({ req }) => {
     const token = req.headers.authorization || "";
     const userId = token.split(" ")[1]; // get the user name after 'Bearer '
-    // console.log("token-------", token);
     return;
+    console.log("token-------", token);
+
     console.log("userId-------", userId);
     // if (userId) {
     //   const PORT = Number(process.env.USER_PORT) || 3004;

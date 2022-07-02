@@ -25,13 +25,9 @@ class UserAPI extends RESTDataSource {
     return { ...data, id: data._id };
   }
 
-  async login(user: IUser) {
+  async login(user: IUserInput) {
     console.log("dataUser ---", user);
-    const qq = {
-      password: "saaa222aaa",
-      email: "saaa@mail.ru",
-    };
-    const data = await this.post("users/login", qq);
+    const data = await this.post("users/login", user);
     console.log("---data", data);
 
     return data.jwt;

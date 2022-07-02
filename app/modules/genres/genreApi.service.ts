@@ -1,12 +1,18 @@
 import "dotenv/config";
-import { RESTDataSource } from "apollo-datasource-rest";
-import { IGenre } from "./genre.interface";
+import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
+import { IGenre, IGenreInput } from "./genre.interface";
+import { GLOBAL_VALUES } from "../../utils/constants";
 
 class GenreAPI extends RESTDataSource {
   PORT = Number(process.env.GENRE_PORT) || 3001;
   constructor() {
     super();
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
+  }
+
+  willSendRequest(request: RequestOptions) {
+    console.log("GLOBAL_VALUES.token ----- ", GLOBAL_VALUES.token);
+    request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
   async getGenres() {
@@ -20,6 +26,19 @@ class GenreAPI extends RESTDataSource {
       console.log(`genre ID ${genreID} isn't correct`);
       return;
     }
+    return { ...data, id: data._id };
+  }
+
+  async createGenre(genre: IGenreInput) {
+    console.log(genre);
+    const qq = {
+      name: "classic",
+      year: 1900,
+      description: "description",
+      country: "classic",
+    };
+    console.log("createGenre(genre ---", qq);
+    const data = await this.post("genres", qq);
     return { ...data, id: data._id };
   }
 }

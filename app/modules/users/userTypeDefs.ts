@@ -26,21 +26,15 @@ export default gql`
 
   type registerUserResponse {
     code: Int!
-    "Indicates whether the mutation was successful"
     success: Boolean!
-    "Human-readable message for the UI"
     message: String!
-    "Newly updated track after a successful mutation"
     user: User
   }
 
   type loginResponse {
     code: Int!
-    "Indicates whether the mutation was successful"
     success: Boolean!
-    "Human-readable message for the UI"
     message: String!
-    "Newly updated track after a successful mutation"
     jwt: String
   }
 `;

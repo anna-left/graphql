@@ -1,3 +1,5 @@
+import { GLOBAL_VALUES } from "../../utils/constants";
+
 const userResolver = {
   Query: {
     user: (
@@ -60,8 +62,8 @@ const userResolver = {
         const jwt = await dataSources.userAPI.login({ password, email });
         console.log("jwtResolver ---", jwt);
 
-        process.env.token = jwt;
-        console.log("process.env.token---", process.env.token);
+        GLOBAL_VALUES.token = jwt;
+        console.log("GLOBAL_VALUES.token---", GLOBAL_VALUES.token);
         return {
           code: 200,
           success: true,
