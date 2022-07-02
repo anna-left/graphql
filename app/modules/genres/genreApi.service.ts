@@ -30,15 +30,8 @@ class GenreAPI extends RESTDataSource {
   }
 
   async createGenre(genre: IGenreInput) {
-    console.log(genre);
-    const qq = {
-      name: "classic",
-      year: 1900,
-      description: "description",
-      country: "classic",
-    };
-    console.log("createGenre(genre ---", qq);
-    const data = await this.post("genres", qq);
+    console.log("createGenre(genre ---", genre);
+    const data = await this.post("genres", genre);
     return { ...data, id: data._id };
   }
 }
