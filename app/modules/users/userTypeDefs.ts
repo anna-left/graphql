@@ -4,8 +4,7 @@ export default gql`
   type User {
     id: ID!
     firstName: String
-    secondName: String
-    middleName: String
+    lastName: String
     password: String!
     email: String!
   }
@@ -16,8 +15,8 @@ export default gql`
 
   type Mutation {
     registerUser(
-      firstName: String
-      lastName: String
+      firstName: String!
+      lastName: String!
       password: String!
       email: String!
     ): registerUserResponse!
@@ -35,4 +34,13 @@ export default gql`
     user: User
   }
 
+  type loginResponse {
+    code: Int!
+    "Indicates whether the mutation was successful"
+    success: Boolean!
+    "Human-readable message for the UI"
+    message: String!
+    "Newly updated track after a successful mutation"
+    jwt: String
+  }
 `;

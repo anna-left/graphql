@@ -45,6 +45,40 @@ const userResolver = {
         };
       }
     },
+    login: async (
+      _: string,
+      {
+        password,
+        email,
+      }: {
+        password: string;
+        email: string;
+      },
+      { dataSources }: { dataSources: any }
+    ) => {
+      try {
+        const jwt = await dataSources.userAPI.login({ password, email });
+        console.log("jwtResolver ---", jwt);
+
+        process.env.token = jwt;
+        console.log("process.env.token---", process.env.token);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully logged user ${jwt}`,
+          jwt,
+        };
+      } catch (err: any) {
+        console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          jwt: null,
+        };
+      }
+    },
+  },
 };
 
 export { userResolver };

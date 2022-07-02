@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { RESTDataSource } from "apollo-datasource-rest";
-import { IUser } from "./user.interface";
+import { IUser, IUserInput } from "./user.interface";
 
 class UserAPI extends RESTDataSource {
   PORT = Number(process.env.USER_PORT) || 3004;
@@ -18,17 +18,23 @@ class UserAPI extends RESTDataSource {
     return { ...data, id: data._id };
   }
 
-  async registerUser(user: IUser) {
+  async registerUser(user: IUserInput) {
     console.log("user ---", user);
+    const data = await this.post("users/register", user);
+    console.log("---data", data);
+    return { ...data, id: data._id };
+  }
+
+  async login(user: IUser) {
+    console.log("dataUser ---", user);
     const qq = {
-      firstName: "first name",
-      lastName: "last name",
       password: "saaa222aaa",
       email: "saaa@mail.ru",
     };
-    const data = await this.post("users/register", qq);
+    const data = await this.post("users/login", qq);
     console.log("---data", data);
-    return { ...data, id: data._id };
+
+    return data.jwt;
   }
 }
 

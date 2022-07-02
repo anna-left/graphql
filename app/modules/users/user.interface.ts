@@ -1,9 +1,12 @@
-interface IUser {
-  _id: string;
+interface IUserInput {
   firstName: string;
   lastName: string;
   password: string;
   email: string;
 }
 
-export { IUser };
+interface IUser extends IUserInput {
+  _id: string;
+}
+
+export { IUser, IUserInput };
