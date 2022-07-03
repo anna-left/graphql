@@ -4,6 +4,7 @@ export default gql`
   type Track {
     id: ID!
     title: String!
+    # albums: [Album]
     albumId: String
     bands: [Band]
     duration: Int

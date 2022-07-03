@@ -1,6 +1,7 @@
 import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrackInput } from "../tracks/track.interface";
+import { GLOBAL_VALUES } from "../../utils/constants";
 
 const trackResolver = {
   Query: {
@@ -49,6 +50,14 @@ const trackResolver = {
       { trackInput }: { trackInput: ITrackInput },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          track: null,
+        };
+      }
       try {
         console.log("newTrack ---", trackInput);
         const track = await dataSources.trackAPI.createTrack(trackInput);
@@ -74,6 +83,14 @@ const trackResolver = {
       { trackInput }: { trackInput: ITrackInput },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          track: null,
+        };
+      }
       try {
         // const newTrack = { name, description, country, year };
         // console.log("newTrack ---", newTrack);
@@ -110,6 +127,14 @@ const trackResolver = {
       { id }: { id: string },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          id: "",
+        };
+      }
       try {
         const answer = await dataSources.trackAPI.deleteTrack(id);
         // console.log("answer ---", answer);

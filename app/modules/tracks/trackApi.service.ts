@@ -65,6 +65,9 @@ class TrackAPI extends RESTDataSource {
       console.log(`Could not find track with ID ${id}`);
       return null;
     }
+
+    //удалить ссылки в альбоме и в фаворите
+
     return await this.delete(`tracks/${id}`);
   }
 }

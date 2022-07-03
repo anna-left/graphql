@@ -2,6 +2,7 @@ import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
 import { IAlbumInput } from "../albums/album.interface";
+import { GLOBAL_VALUES } from "../../utils/constants";
 
 const albumResolver = {
   Query: {
@@ -72,6 +73,14 @@ const albumResolver = {
       { albumInput }: { albumInput: IAlbumInput },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          album: null,
+        };
+      }
       try {
         console.log("newAlbum ---", albumInput);
         const album = await dataSources.albumAPI.createAlbum(albumInput);

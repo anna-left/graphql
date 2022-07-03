@@ -1,3 +1,5 @@
+import { GLOBAL_VALUES } from "../../utils/constants";
+
 const genreResolver = {
   Query: {
     genres: (
@@ -31,6 +33,14 @@ const genreResolver = {
       },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          genre: null,
+        };
+      }
       try {
         const newGenre = { name, description, country, year };
         // console.log("newGenre ---", newGenre);
@@ -69,6 +79,14 @@ const genreResolver = {
       },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          genre: null,
+        };
+      }
       try {
         const newGenre = { name, description, country, year };
         // console.log("newGenre ---", newGenre);
@@ -105,6 +123,14 @@ const genreResolver = {
       { id }: { id: string },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: `Access denied for unauthorized users`,
+          id: "",
+        };
+      }
       try {
         const answer = await dataSources.genreAPI.deleteGenre(id);
         // console.log("answer ---", answer);
