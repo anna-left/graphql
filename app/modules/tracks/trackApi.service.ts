@@ -17,7 +17,7 @@ class TrackAPI extends RESTDataSource {
   async getTrack(trackID: string) {
     const data = await this.get(`tracks/${trackID}`);
     if (!data) {
-      console.log(`track ID ${trackID} isn't correct`);
+      console.log(`Could not find track with ID ${trackID}`);
       return;
     }
     return { ...data, id: data._id };

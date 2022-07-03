@@ -21,6 +21,16 @@ export default gql`
       country: String
       year: Int
     ): createGenreResponse!
+
+    updateGenre(
+      id: ID!
+      name: String!
+      description: String
+      country: String
+      year: Int
+    ): updateGenreResponse!
+
+    deleteGenre(id: ID!): deleteGenreResponse!
   }
 
   type createGenreResponse {
@@ -28,5 +38,19 @@ export default gql`
     success: Boolean!
     message: String!
     genre: Genre
+  }
+
+  type updateGenreResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    genre: Genre
+  }
+
+  type deleteGenreResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    id: String
   }
 `;

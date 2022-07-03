@@ -17,7 +17,7 @@ class AlbumAPI extends RESTDataSource {
   async getAlbum(albumID: string) {
     const data = await this.get(`albums/${albumID}`);
     if (!data) {
-      console.log(`album ID ${albumID} isn't correct`);
+      console.log(`Could not find album with ID ${albumID}`);
       return;
     }
     return { ...data, id: data._id };

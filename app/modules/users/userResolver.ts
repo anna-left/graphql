@@ -63,11 +63,11 @@ const userResolver = {
         console.log("jwtResolver ---", jwt);
 
         GLOBAL_VALUES.token = jwt;
-        console.log("GLOBAL_VALUES.token---", GLOBAL_VALUES.token);
+        // console.log("GLOBAL_VALUES.token---", GLOBAL_VALUES.token);
         return {
           code: 200,
           success: true,
-          message: `Successfully logged user ${jwt}`,
+          message: `Successfully logged`,
           jwt,
         };
       } catch (err: any) {

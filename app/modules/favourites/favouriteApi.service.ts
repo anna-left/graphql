@@ -17,7 +17,7 @@ class FavouriteAPI extends RESTDataSource {
   async getIFavourite(favouriteID: string) {
     const data = await this.get(`favourites/${favouriteID}`);
     if (!data) {
-      console.log(`favourite ID ${favouriteID} isn't correct`);
+      console.log(`Could not find favourite with ID ${favouriteID}`);
       return;
     }
     return { ...data, id: data._id };

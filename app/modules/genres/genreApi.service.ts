@@ -11,7 +11,6 @@ class GenreAPI extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
-    console.log("GLOBAL_VALUES.token ----- ", GLOBAL_VALUES.token);
     request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
@@ -21,18 +20,50 @@ class GenreAPI extends RESTDataSource {
   }
 
   async getGenre(genreID: string) {
-    const data = await this.get(`genres/${genreID}`);
-    if (!data) {
-      console.log(`genre ID ${genreID} isn't correct`);
-      return;
+    try {
+      const data = await this.get(`genres/${genreID}`);
+      return { ...data, id: data._id };
+    } catch (error) {
+      console.log(`Could not find genre with ID ${genreID}`);
+      return null;
     }
-    return { ...data, id: data._id };
   }
 
   async createGenre(genre: IGenreInput) {
-    console.log("createGenre(genre ---", genre);
+    // console.log("createGenre(genre ---", genre);
     const data = await this.post("genres", genre);
     return { ...data, id: data._id };
+  }
+
+  async updateGenre(id: string, genreData: IGenreInput) {
+    console.log("updateGenre  id ---", id);
+    const genre = await this.getGenre(id);
+    console.log("updateGenre genre ---", genre);
+    if (!genre) {
+      console.log(`Could not find genre with ID ${id}`);
+      return null;
+    }
+    console.log("updateGenre(genre ---", genreData);
+    const updGenre = {
+      id,
+      _id: id,
+      name: genreData.name || genre.name,
+      description: genreData.description || genre.description,
+      country: genreData.country || genre.country,
+      year: genreData.year || genre.year,
+    };
+    console.log("updGenre --- ", updGenre);
+    const data = await this.put(`genres/${id}`, updGenre);
+    return data;
+  }
+
+  async deleteGenre(id: string) {
+    const genre = await this.getGenre(id);
+    if (!genre) {
+      console.log(`Could not find genre with ID ${id}`);
+      return null;
+    }
+    return await this.delete(`genres/${id}`);
   }
 }
 

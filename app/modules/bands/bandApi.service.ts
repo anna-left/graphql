@@ -17,7 +17,7 @@ class BandAPI extends RESTDataSource {
   async getBand(bandID: string) {
     const { members, ...data } = await this.get(`bands/${bandID}`);
     if (!data) {
-      console.log(`band ID ${bandID} isn't correct`);
+      console.log(`Could not find band with ID${bandID}`);
       return;
     }
     return { ...data, id: data._id, membersId: members };
