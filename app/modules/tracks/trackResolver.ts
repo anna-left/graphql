@@ -56,7 +56,7 @@ const trackResolver = {
         return {
           code: 200,
           success: true,
-          message: `Successfully registered track ${track.name}`,
+          message: `Successfully created track ${track.name}`,
           track,
         };
       } catch (err: any) {
@@ -71,40 +71,28 @@ const trackResolver = {
     },
     updateTrack: async (
       _: string,
-      {
-        id,
-        name,
-        description,
-        country,
-        year,
-      }: {
-        id: string;
-        name: string;
-        description: string;
-        country: string;
-        year: number;
-      },
+      { trackInput }: { trackInput: ITrackInput },
       { dataSources }: { dataSources: any }
     ) => {
       try {
-        const newTrack = { name, description, country, year };
+        // const newTrack = { name, description, country, year };
         // console.log("newTrack ---", newTrack);
         // const track = await dataSources.trackAPI.updateTrack(id, newTrack);
-        // console.log("track ---", track);
-        const track = await dataSources.trackAPI.updateTrack(id, newTrack);
+        console.log("trackInput ---", trackInput);
+        const track = await dataSources.trackAPI.updateTrack(trackInput);
         // console.log("answer ---", answer);
         if (!track) {
           return {
             code: 404,
             success: false,
             message: "Not Found ",
-            id,
+            track,
           };
         }
         return {
           code: 200,
           success: true,
-          message: `Successfully registered track ${track.name}`,
+          message: `Successfully updated track ${track.name}`,
           track,
         };
       } catch (err: any) {

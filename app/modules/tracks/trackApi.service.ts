@@ -21,7 +21,9 @@ class TrackAPI extends RESTDataSource {
   }
 
   async getTrack(trackID: string) {
+    console.log("id ---", trackID);
     const data = await this.get(`tracks/${trackID}`);
+    console.log("data --- ", data);
     if (!data) {
       console.log(`Could not find track with ID ${trackID}`);
       return;
@@ -33,6 +35,37 @@ class TrackAPI extends RESTDataSource {
     console.log("createTrack(track ---", track);
     const data = await this.post("tracks", track);
     return { ...data, id: data._id };
+  }
+
+  async updateTrack(trackData: ITrack) {
+    const findTrack = await this.getTrack(trackData._id);
+    console.log("updateTrack track ---", findTrack);
+    if (!findTrack) {
+      console.log(`Could not find track with ID ${trackData._id}`);
+      return null;
+    }
+    // console.log("updateTrack ---", findTrack);
+    const updTrack = {
+      id: trackData._id,
+      _id: trackData._id,
+      title: trackData.title || findTrack.title,
+      duration: trackData.duration || findTrack.duration,
+      released: trackData.released || findTrack.released,
+      albumsIds: trackData.albumsIds || findTrack.albumsIds,
+    };
+
+    console.log("updateTrack(track ---", updTrack);
+    const data = await this.put(`tracks/${findTrack._id}`, updTrack);
+    return { ...data, id: data._id };
+  }
+
+  async deleteTrack(id: string) {
+    const track = await this.getTrack(id);
+    if (!track) {
+      console.log(`Could not find track with ID ${id}`);
+      return null;
+    }
+    return await this.delete(`tracks/${id}`);
   }
 }
 

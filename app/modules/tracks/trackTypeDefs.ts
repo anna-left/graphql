@@ -38,7 +38,7 @@ export default gql`
   type Mutation {
     createTrack(trackInput: CreateTrackInput): createTrackResponse!
 
-    updateTrack(UpdateTrackInput: UpdateTrackInput): updateTrackResponse!
+    updateTrack(trackInput: UpdateTrackInput): updateTrackResponse!
 
     deleteTrack(id: ID!): deleteTrackResponse!
   }
