@@ -1,5 +1,4 @@
-interface ITrack {
-  _id: string;
+interface ITrackInput {
   title: string;
   albumId: string;
   bandsIds: string[];
@@ -7,5 +6,8 @@ interface ITrack {
   released: number;
   genresIds: string[];
 }
+interface ITrack extends ITrackInput {
+  _id: string;
+}
 
-export { ITrack };
+export { ITrack, ITrackInput };

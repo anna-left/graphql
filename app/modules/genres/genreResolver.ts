@@ -33,9 +33,9 @@ const genreResolver = {
     ) => {
       try {
         const newGenre = { name, description, country, year };
-        console.log("newGenre ---", newGenre);
+        // console.log("newGenre ---", newGenre);
         const genre = await dataSources.genreAPI.createGenre(newGenre);
-        console.log("genre ---", genre);
+        // console.log("genre ---", genre);
         return {
           code: 200,
           success: true,
@@ -43,7 +43,7 @@ const genreResolver = {
           genre,
         };
       } catch (err: any) {
-        console.log("---err", err);
+        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -91,7 +91,7 @@ const genreResolver = {
           genre,
         };
       } catch (err: any) {
-        console.log("---err", err);
+        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,

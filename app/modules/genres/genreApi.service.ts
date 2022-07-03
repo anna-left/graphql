@@ -20,12 +20,17 @@ class GenreAPI extends RESTDataSource {
   }
 
   async getGenre(genreID: string) {
+    console.log(`find genre with ID --- ${genreID}`);
     try {
       const data = await this.get(`genres/${genreID}`);
+      if (!data?.id) {
+        console.log(`Could not find genre with ID ${genreID}`);
+        return { id: "object doesn't exist", name: "object doesn't exist" };
+      }
       return { ...data, id: data._id };
     } catch (error) {
       console.log(`Could not find genre with ID ${genreID}`);
-      return null;
+      return { id: "object doesn't exist", name: "object doesn't exist" };
     }
   }
 
@@ -36,14 +41,14 @@ class GenreAPI extends RESTDataSource {
   }
 
   async updateGenre(id: string, genreData: IGenreInput) {
-    console.log("updateGenre  id ---", id);
+    // console.log("updateGenre  id ---", id);
     const genre = await this.getGenre(id);
-    console.log("updateGenre genre ---", genre);
+    // console.log("updateGenre genre ---", genre);
     if (!genre) {
       console.log(`Could not find genre with ID ${id}`);
       return null;
     }
-    console.log("updateGenre(genre ---", genreData);
+    // console.log("updateGenre(genre ---", genreData);
     const updGenre = {
       id,
       _id: id,
@@ -52,7 +57,7 @@ class GenreAPI extends RESTDataSource {
       country: genreData.country || genre.country,
       year: genreData.year || genre.year,
     };
-    console.log("updGenre --- ", updGenre);
+    // console.log("updGenre --- ", updGenre);
     const data = await this.put(`genres/${id}`, updGenre);
     return data;
   }
