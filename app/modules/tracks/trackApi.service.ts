@@ -9,8 +9,8 @@ class TrackAPI extends RESTDataSource {
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
-  async getTracks() {
-    const data = await this.get("tracks");
+  async getTracks(limit = 0, offset = 0) {
+    const data = await this.get("tracks", { limit, offset });
     return data.items.map((item: ITrack) => ({ ...item, id: item._id }));
   }
 

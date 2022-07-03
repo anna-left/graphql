@@ -11,7 +11,7 @@ export default gql`
   }
 
   extend type Query {
-    favourites: [Favourite!]!
+    favourites(limit: Int, offset: Int): [Favourite!]!
     favourite(id: ID!): Favourite!
   }
 `;

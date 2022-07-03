@@ -4,8 +4,12 @@ import { ITrack } from "../tracks/track.interface";
 
 const albumResolver = {
   Query: {
-    albums: (_: string, __: string, { dataSources }: { dataSources: any }) => {
-      return dataSources.albumAPI.getAlbums();
+    albums: (
+      _: string,
+      { limit, offset }: { limit: number; offset: number },
+      { dataSources }: { dataSources: any }
+    ) => {
+      return dataSources.albumAPI.getAlbums(limit, offset);
     },
     album: (
       _: string,

@@ -6,11 +6,11 @@ const favouriteResolver = {
   Query: {
     favourites: (
       _: string,
-      __: string,
+      { limit, offset }: { limit: number; offset: number },
       { dataSources }: { dataSources: any }
     ) => {
       console.log("---resolver");
-      return dataSources.favouriteAPI.getFavourites();
+      return dataSources.favouriteAPI.getFavourites(limit, offset);
     },
     favourite: (
       _: string,

@@ -10,7 +10,7 @@ export default gql`
   }
 
   extend type Query {
-    genres: [Genre!]!
+    genres(limit: Int, offset: Int): [Genre!]!
     genre(id: ID!): Genre!
   }
 

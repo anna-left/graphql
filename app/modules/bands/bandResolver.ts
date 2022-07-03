@@ -3,8 +3,12 @@ import { IGenre } from "../genres/genre.interface";
 
 const bandResolver = {
   Query: {
-    bands: (_: string, __: string, { dataSources }: { dataSources: any }) => {
-      return dataSources.bandAPI.getBands();
+    bands: (
+      _: string,
+      { limit, offset }: { limit: number; offset: number },
+      { dataSources }: { dataSources: any }
+    ) => {
+      return dataSources.bandAPI.getBands(limit, offset);
     },
     band: (
       _: string,

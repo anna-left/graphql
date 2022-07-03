@@ -2,8 +2,12 @@ import { IBand } from "../bands/band.interface";
 
 const artistResolver = {
   Query: {
-    artists: (_: string, __: string, { dataSources }: { dataSources: any }) => {
-      return dataSources.artistAPI.getArtists();
+    artists: (
+      _: string,
+      { limit, offset }: { limit: number; offset: number },
+      { dataSources }: { dataSources: any }
+    ) => {
+      return dataSources.artistAPI.getArtists(limit, offset);
     },
     artist: (
       _: string,

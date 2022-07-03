@@ -15,8 +15,8 @@ class GenreAPI extends RESTDataSource {
     request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
-  async getGenres() {
-    const data = await this.get("genres");
+  async getGenres(limit = 0, offset = 0) {
+    const data = await this.get("genres", { limit, offset });
     return data.items.map((item: IGenre) => ({ ...item, id: item._id }));
   }
 

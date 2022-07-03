@@ -13,7 +13,7 @@ export default gql`
   }
 
   extend type Query {
-    albums: [Album!]!
+    albums(limit: Int, offset: Int): [Album!]!
     album(id: ID!): Album!
   }
 `;

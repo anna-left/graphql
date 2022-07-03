@@ -3,8 +3,12 @@ import { IGenre } from "../genres/genre.interface";
 
 const trackResolver = {
   Query: {
-    tracks: (_: string, __: string, { dataSources }: { dataSources: any }) => {
-      return dataSources.trackAPI.getTracks();
+    tracks: (
+      _: string,
+      { limit, offset }: { limit: number; offset: number },
+      { dataSources }: { dataSources: any }
+    ) => {
+      return dataSources.trackAPI.getTracks(limit, offset);
     },
     track: (
       _: string,

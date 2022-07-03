@@ -9,8 +9,8 @@ class BandAPI extends RESTDataSource {
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
-  async getBands() {
-    const data = await this.get("bands");
+  async getBands(limit = 0, offset = 0) {
+    const data = await this.get("bands", { limit, offset });
     return data.items.map((item: IBand) => ({ ...item, id: item._id }));
   }
 

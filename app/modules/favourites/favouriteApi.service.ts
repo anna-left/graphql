@@ -9,8 +9,8 @@ class FavouriteAPI extends RESTDataSource {
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
-  async getFavourites() {
-    const data = await this.get("favourites");
+  async getFavourites(limit = 0, offset = 0) {
+    const data = await this.get("favourites", { limit, offset });
     return data.items.map((item: IFavourite) => ({ ...item, id: item._id }));
   }
 

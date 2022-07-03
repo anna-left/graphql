@@ -12,7 +12,7 @@ export default gql`
   }
 
   extend type Query {
-    bands: [Band!]!
+    bands(limit: Int, offset: Int): [Band!]!
     band(id: ID!): Band!
   }
 `;

@@ -9,8 +9,8 @@ class AlbumAPI extends RESTDataSource {
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
-  async getAlbums() {
-    const data = await this.get("albums");
+  async getAlbums(limit = 0, offset = 0) {
+    const data = await this.get("albums", { limit, offset });
     return data.items.map((item: IAlbum) => ({ ...item, id: item._id }));
   }
 

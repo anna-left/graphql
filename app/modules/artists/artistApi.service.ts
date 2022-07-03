@@ -9,8 +9,8 @@ class ArtistAPI extends RESTDataSource {
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
   }
 
-  async getArtists() {
-    const data = await this.get("artists");
+  async getArtists(limit = 0, offset = 0) {
+    const data = await this.get("artists", { limit, offset });
     return data.items.map((item: IArtist) => ({
       ...item,
       id: item._id,

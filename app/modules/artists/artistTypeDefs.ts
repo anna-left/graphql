@@ -14,7 +14,7 @@ export default gql`
   }
 
   extend type Query {
-    artists: [Artist!]!
+    artists(limit: Int, offset: Int): [Artist!]!
     artist(id: ID!): Artist!
   }
 `;

@@ -1,7 +1,11 @@
 const genreResolver = {
   Query: {
-    genres: (_: string, __: string, { dataSources }: { dataSources: any }) => {
-      return dataSources.genreAPI.getGenres();
+    genres: (
+      _: string,
+      { limit, offset }: { limit: number; offset: number },
+      { dataSources }: { dataSources: any }
+    ) => {
+      return dataSources.genreAPI.getGenres(limit, offset);
     },
     genre: (
       _: string,
