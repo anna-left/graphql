@@ -1,5 +1,4 @@
-interface IAlbum {
-  _id: string;
+interface IAlbumInput {
   name: string;
   released: number;
   artistsIds: string[];
@@ -9,4 +8,8 @@ interface IAlbum {
   image: string;
 }
 
-export { IAlbum };
+interface IAlbum extends IAlbumInput {
+  _id: string;
+}
+
+export { IAlbum, IAlbumInput };

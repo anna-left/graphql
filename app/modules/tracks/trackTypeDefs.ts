@@ -4,7 +4,7 @@ export default gql`
   type Track {
     id: ID!
     title: String!
-    albums: [Album]
+    albumId: String
     bands: [Band]
     duration: Int
     released: Int
@@ -13,7 +13,7 @@ export default gql`
 
   input CreateTrackInput {
     title: String!
-    albumsIds: [String]
+    albumId: String
     bandsIds: [String]
     duration: Int
     released: Int
@@ -23,7 +23,7 @@ export default gql`
   input UpdateTrackInput {
     id: ID!
     title: String!
-    albumsIds: [String]
+    albumId: String
     bandsIds: [String]
     duration: Int
     released: Int

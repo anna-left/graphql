@@ -1,6 +1,7 @@
 import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
+import { IAlbumInput } from "../albums/album.interface";
 
 const albumResolver = {
   Query: {
@@ -63,6 +64,33 @@ const albumResolver = {
         arrPromises.push(dataSources.artistAPI.getArtist(artistsIds[i]));
       }
       return Promise.all(arrPromises);
+    },
+  },
+  Mutation: {
+    createAlbum: async (
+      _: string,
+      { albumInput }: { albumInput: IAlbumInput },
+      { dataSources }: { dataSources: any }
+    ) => {
+      try {
+        console.log("newAlbum ---", albumInput);
+        const album = await dataSources.albumAPI.createAlbum(albumInput);
+        console.log("album ---", album);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully created album ${album.name}`,
+          album,
+        };
+      } catch (err: any) {
+        console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          album: null,
+        };
+      }
     },
   },
 };

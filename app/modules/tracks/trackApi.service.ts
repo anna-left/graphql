@@ -51,7 +51,7 @@ class TrackAPI extends RESTDataSource {
       title: trackData.title || findTrack.title,
       duration: trackData.duration || findTrack.duration,
       released: trackData.released || findTrack.released,
-      albumsIds: trackData.albumsIds || findTrack.albumsIds,
+      albumId: trackData.albumId || findTrack.albumId,
     };
 
     console.log("updateTrack(track ---", updTrack);
