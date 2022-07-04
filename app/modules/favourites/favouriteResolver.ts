@@ -69,11 +69,58 @@ const favouriteResolver = {
     },
   },
   Mutation: {
+    // *** genre
     addGenreToFavourites: async (
       _: string,
       { id }: { id: string },
       { dataSources }: { dataSources: any }
     ) => {
+      const userID = await dataSources.userAPI.getUserByToken()._id;
+      // console.log("dataUser --- ", userID);
+
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          favourite: null,
+        };
+      }
+      try {
+        // console.log("newFavourite ---", id);
+        const favourite = await dataSources.favouriteAPI.addToFavourites(
+          userID,
+          {
+            id,
+            type: "genres",
+          }
+        );
+        // console.log("favourite ---", favourite);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully registered favourite ${id}`,
+          favourite,
+        };
+      } catch (err: any) {
+        // console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          favourite: null,
+        };
+      }
+    },
+    // *** track
+    addTrackToFavourites: async (
+      _: string,
+      { id }: { id: string },
+      { dataSources }: { dataSources: any }
+    ) => {
+      const userID = await dataSources.userAPI.getUserByToken()._id;
+      console.log("dataUser --- ", userID);
+
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -84,15 +131,104 @@ const favouriteResolver = {
       }
       try {
         console.log("newFavourite ---", id);
-        const favourite = await dataSources.favouriteAPI.createFavourite({
-          id,
-          type: "genres",
-        });
-        // console.log("favourite ---", favourite);
+        const favourite = await dataSources.favouriteAPI.addToFavourites(
+          userID,
+          {
+            id,
+            type: "tracks",
+          }
+        );
+        console.log("favourite ---", favourite);
         return {
           code: 200,
           success: true,
-          message: `Successfully registered favourite ${favourite.name}`,
+          message: `Successfully registered favourite ${id}`,
+          favourite,
+        };
+      } catch (err: any) {
+        // console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          favourite: null,
+        };
+      }
+    },
+    // *** band
+    addBandToFavourites: async (
+      _: string,
+      { id }: { id: string },
+      { dataSources }: { dataSources: any }
+    ) => {
+      const userID = await dataSources.userAPI.getUserByToken()._id;
+      console.log("dataUser --- ", userID);
+
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          favourite: null,
+        };
+      }
+      try {
+        console.log("newFavourite ---", id);
+        const favourite = await dataSources.favouriteAPI.addToFavourites(
+          userID,
+          {
+            id,
+            type: "bands",
+          }
+        );
+        console.log("favourite ---", favourite);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully registered favourite ${id}`,
+          favourite,
+        };
+      } catch (err: any) {
+        // console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          favourite: null,
+        };
+      }
+    },
+    // *** artist
+    addArtistToFavourites: async (
+      _: string,
+      { id }: { id: string },
+      { dataSources }: { dataSources: any }
+    ) => {
+      const userID = await dataSources.userAPI.getUserByToken()._id;
+      console.log("dataUser --- ", userID);
+
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          favourite: null,
+        };
+      }
+      try {
+        console.log("newFavourite ---", id);
+        const favourite = await dataSources.favouriteAPI.addToFavourites(
+          userID,
+          {
+            id,
+            type: "artists",
+          }
+        );
+        console.log("favourite ---", favourite);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully registered favourite ${id}`,
           favourite,
         };
       } catch (err: any) {

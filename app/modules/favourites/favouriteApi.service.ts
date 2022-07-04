@@ -29,10 +29,10 @@ class FavouriteAPI extends RESTDataSource {
     return { ...data, id: data._id };
   }
 
-  async createFavourite(dataGenre: IFavouriteInput) {
-    console.log("createFavourite ---", dataGenre);
-    const userID = "62c073b6a5c815cb1d60debe";
-    const data = await this.put(`favourites/add?user=${userID}`, dataGenre);
+  async addToFavourites(userID: string, dataFavourite: IFavouriteInput) {
+    console.log("createFavourite ---", dataFavourite);
+    console.log("userID ---", userID);
+    const data = await this.put(`favourites/add?user=${userID}`, dataFavourite);
     console.log("data ---", data);
     return { ...data, id: data._id };
   }
