@@ -7,4 +7,9 @@ interface IFavourite {
   tracksIds: string[];
 }
 
-export { IFavourite };
+interface IFavouriteInput {
+  id: string;
+  type: string;
+}
+
+export { IFavourite, IFavouriteInput };

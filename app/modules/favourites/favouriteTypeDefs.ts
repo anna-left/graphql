@@ -14,4 +14,23 @@ export default gql`
     favourites(limit: Int, offset: Int): [Favourite!]!
     favourite(id: ID!): Favourite!
   }
+
+  # input CreateFavourite {
+  #   id: String
+  #   type: String
+  # }
+
+  type Mutation {
+    addTrackToFavourites(id: ID!): FavouriteResponse
+    addBandToFavourites(id: ID!): FavouriteResponse
+    addArtistToFavourites(id: ID!): FavouriteResponse
+    addGenreToFavourites(id: ID!): FavouriteResponse
+  }
+
+  type FavouriteResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    favourite: Favourite
+  }
 `;

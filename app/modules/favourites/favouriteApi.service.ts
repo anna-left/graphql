@@ -1,12 +1,18 @@
 import "dotenv/config";
-import { RESTDataSource } from "apollo-datasource-rest";
-import { IFavourite } from "./favourite.interface";
+import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
+import { IFavourite, IFavouriteInput } from "./favourite.interface";
+import { GLOBAL_VALUES } from "../../utils/constants";
+// import { IGenreInput } from "../genres/genre.interface";
 
 class FavouriteAPI extends RESTDataSource {
   PORT = Number(process.env.FAVOURITE_PORT) || 3007;
   constructor() {
     super();
     this.baseURL = `http://localhost:${this.PORT}/v1/`;
+  }
+
+  willSendRequest(request: RequestOptions) {
+    request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
   async getFavourites(limit = 0, offset = 0) {
@@ -20,6 +26,14 @@ class FavouriteAPI extends RESTDataSource {
       console.log(`Could not find favourite with ID ${favouriteID}`);
       return;
     }
+    return { ...data, id: data._id };
+  }
+
+  async createFavourite(dataGenre: IFavouriteInput) {
+    console.log("createFavourite ---", dataGenre);
+    const userID = "62c073b6a5c815cb1d60debe";
+    const data = await this.put(`favourites/add?user=${userID}`, dataGenre);
+    console.log("data ---", data);
     return { ...data, id: data._id };
   }
 }

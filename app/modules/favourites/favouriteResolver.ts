@@ -1,6 +1,8 @@
 import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
+import { GLOBAL_VALUES } from "../../utils/constants";
+// import { IFavourite } from "./favourite.interface";
 
 const favouriteResolver = {
   Query: {
@@ -64,6 +66,44 @@ const favouriteResolver = {
         arrPromises.push(dataSources.artistAPI.getArtist(artistsIds[i]));
       }
       return Promise.all(arrPromises);
+    },
+  },
+  Mutation: {
+    addGenreToFavourites: async (
+      _: string,
+      { id }: { id: string },
+      { dataSources }: { dataSources: any }
+    ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          favourite: null,
+        };
+      }
+      try {
+        console.log("newFavourite ---", id);
+        const favourite = await dataSources.favouriteAPI.createFavourite({
+          id,
+          type: "genres",
+        });
+        // console.log("favourite ---", favourite);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully registered favourite ${favourite.name}`,
+          favourite,
+        };
+      } catch (err: any) {
+        // console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          favourite: null,
+        };
+      }
     },
   },
 };
