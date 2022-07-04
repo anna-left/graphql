@@ -9,6 +9,15 @@ const userResolver = {
     ) => {
       return dataSources.userAPI.getUser(id);
     },
+    jwt: (_: string, __: string, { dataSources }: { dataSources: any }) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          id: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          email: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+        };
+      }
+      return dataSources.userAPI.getUserByToken();
+    },
   },
   Mutation: {
     registerUser: async (

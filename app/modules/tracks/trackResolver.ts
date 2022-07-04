@@ -54,7 +54,7 @@ const trackResolver = {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           track: null,
         };
       }
@@ -87,7 +87,7 @@ const trackResolver = {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           track: null,
         };
       }
@@ -131,7 +131,7 @@ const trackResolver = {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           id: "",
         };
       }

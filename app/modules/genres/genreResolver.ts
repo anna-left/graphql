@@ -37,7 +37,7 @@ const genreResolver = {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           genre: null,
         };
       }
@@ -83,7 +83,7 @@ const genreResolver = {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           genre: null,
         };
       }
@@ -127,7 +127,7 @@ const genreResolver = {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           id: "",
         };
       }

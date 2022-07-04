@@ -9,8 +9,16 @@ export default gql`
     email: String!
   }
 
+  type Jwt {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String!
+  }
+
   type Query {
     user(id: ID!): User!
+    jwt: Jwt!
   }
 
   type Mutation {
