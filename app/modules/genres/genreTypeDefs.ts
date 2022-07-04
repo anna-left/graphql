@@ -9,13 +9,20 @@ export default gql`
     year: Int
   }
 
-  input GenreInput {
-    id: ID!
+  input CreatGenreInput {
     name: String!
     description: String
     country: String
     year: Int
   }
+
+  # input UpdateGenreInput {
+  #   id: ID!
+  #   name: String
+  #   description: String
+  #   country: String
+  #   year: Int
+  # }
 
   extend type Query {
     genres(limit: Int, offset: Int): [Genre!]!
@@ -28,32 +35,32 @@ export default gql`
       description: String
       country: String
       year: Int
-    ): createGenreResponse!
+    ): GenreResponse!
 
     updateGenre(
       id: ID!
-      name: String!
+      name: String
       description: String
       country: String
       year: Int
-    ): updateGenreResponse!
+    ): GenreResponse!
 
     deleteGenre(id: ID!): deleteGenreResponse!
   }
 
-  type createGenreResponse {
+  type GenreResponse {
     code: Int!
     success: Boolean!
     message: String!
     genre: Genre
   }
 
-  type updateGenreResponse {
-    code: Int!
-    success: Boolean!
-    message: String!
-    genre: Genre
-  }
+  # type updateGenreResponse {
+  #   code: Int!
+  #   success: Boolean!
+  #   message: String!
+  #   genre: Genre
+  # }
 
   type deleteGenreResponse {
     code: Int!

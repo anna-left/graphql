@@ -1,4 +1,5 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
+// import { IGenre } from "./genre.interface";
 
 const genreResolver = {
   Query: {
@@ -79,6 +80,9 @@ const genreResolver = {
       },
       { dataSources }: { dataSources: any }
     ) => {
+      const newGenre = { name, description, country, year };
+      console.log("genreInput ---", newGenre);
+      console.log("id ---", id);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -88,8 +92,9 @@ const genreResolver = {
         };
       }
       try {
-        const newGenre = { name, description, country, year };
+        // const newGenre = { name, description, country, year };
         // console.log("newGenre ---", newGenre);
+        // console.log("id ---", id);
         // const genre = await dataSources.genreAPI.updateGenre(id, newGenre);
         // console.log("genre ---", genre);
         const genre = await dataSources.genreAPI.updateGenre(id, newGenre);
@@ -99,7 +104,7 @@ const genreResolver = {
             code: 404,
             success: false,
             message: "Not Found ",
-            id,
+            id: genre,
           };
         }
         return {

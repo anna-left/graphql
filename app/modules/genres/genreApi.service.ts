@@ -60,7 +60,7 @@ class GenreAPI extends RESTDataSource {
     };
     // console.log("updGenre --- ", updGenre);
     const data = await this.put(`genres/${id}`, updGenre);
-    return data;
+    return { ...data, id: data._id };
   }
 
   async deleteGenre(id: string) {
