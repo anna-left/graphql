@@ -1,5 +1,4 @@
-interface IArtist {
-  _id: string;
+interface IArtistInput {
   firstName: string;
   secondName: string;
   middleName: string;
@@ -9,5 +8,11 @@ interface IArtist {
   bandsIds: string[];
   instruments: string[];
 }
+interface IArtist extends IArtistInput {
+  _id: string;
+}
+interface IArtistUpdate extends IArtistInput {
+  id: string;
+}
 
-export { IArtist };
+export { IArtist, IArtistInput, IArtistUpdate };
