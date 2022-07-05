@@ -11,7 +11,6 @@ class AlbumAPI extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
-    console.log("GLOBAL_VALUES.token ---", GLOBAL_VALUES.token);
     request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 

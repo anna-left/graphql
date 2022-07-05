@@ -12,7 +12,7 @@ class UserAPI extends RESTDataSource {
 
   willSendRequest(request: RequestOptions) {
     if (GLOBAL_VALUES.token) {
-      console.log("GLOBAL_VALUES.token --- ", GLOBAL_VALUES.token);
+      // console.log("GLOBAL_VALUES.token --- ", GLOBAL_VALUES.token);
       request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
     }
   }
@@ -45,9 +45,9 @@ class UserAPI extends RESTDataSource {
   }
 
   async login(user: IUserInput) {
-    console.log("dataUser ---", user);
+    // console.log("dataUser ---", user);
     const data = await this.post("users/login", user);
-    console.log("---data", data);
+    // console.log("---data", data);
 
     return data.jwt;
   }

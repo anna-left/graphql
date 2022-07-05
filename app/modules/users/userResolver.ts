@@ -69,7 +69,7 @@ const userResolver = {
     ) => {
       try {
         const jwt = await dataSources.userAPI.login({ password, email });
-        console.log("jwtResolver ---", jwt);
+        // console.log("jwtResolver ---", jwt);
 
         GLOBAL_VALUES.token = jwt;
         // console.log("GLOBAL_VALUES.token---", GLOBAL_VALUES.token);

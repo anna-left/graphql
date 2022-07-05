@@ -51,7 +51,7 @@ const genreResolver = {
         return {
           code: 200,
           success: true,
-          message: `Successfully registered genre ${genre.name}`,
+          message: `Successfully created genre ${genre.name}`,
           genre,
         };
       } catch (err: any) {
@@ -99,7 +99,7 @@ const genreResolver = {
         return {
           code: 200,
           success: true,
-          message: `Successfully registered genre ${genre.name}`,
+          message: `Successfully updated genre ${genre.name}`,
           genre,
         };
       } catch (err: any) {
