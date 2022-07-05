@@ -16,13 +16,13 @@ export default gql`
     year: Int
   }
 
-  # input UpdateGenreInput {
-  #   id: ID!
-  #   name: String
-  #   description: String
-  #   country: String
-  #   year: Int
-  # }
+  input UpdateGenreInput {
+    id: ID!
+    name: String
+    description: String
+    country: String
+    year: Int
+  }
 
   extend type Query {
     genres(limit: Int, offset: Int): [Genre!]!
@@ -37,13 +37,7 @@ export default gql`
       year: Int
     ): GenreResponse!
 
-    updateGenre(
-      id: ID!
-      name: String
-      description: String
-      country: String
-      year: Int
-    ): GenreResponse!
+    updateGenre(updateGenreInput: UpdateGenreInput): GenreResponse!
 
     deleteGenre(id: ID!): deleteGenreResponse!
   }

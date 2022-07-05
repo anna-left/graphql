@@ -1,4 +1,5 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
+import { IGenreUpdate } from "./genre.interface";
 // import { IGenre } from "./genre.interface";
 
 const genreResolver = {
@@ -65,24 +66,12 @@ const genreResolver = {
     },
     updateGenre: async (
       _: string,
-      {
-        id,
-        name,
-        description,
-        country,
-        year,
-      }: {
-        id: string;
-        name: string;
-        description: string;
-        country: string;
-        year: number;
-      },
+      { updateGenreInput }: { updateGenreInput: IGenreUpdate },
       { dataSources }: { dataSources: any }
     ) => {
-      const newGenre = { name, description, country, year };
-      console.log("genreInput ---", newGenre);
-      console.log("id ---", id);
+      // const newGenre = { name, description, country, year };
+      console.log("genreInput ---", updateGenreInput);
+      // console.log("id ---", id);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -97,7 +86,7 @@ const genreResolver = {
         // console.log("id ---", id);
         // const genre = await dataSources.genreAPI.updateGenre(id, newGenre);
         // console.log("genre ---", genre);
-        const genre = await dataSources.genreAPI.updateGenre(id, newGenre);
+        const genre = await dataSources.genreAPI.updateGenre(updateGenreInput);
         // console.log("answer ---", answer);
         if (!genre) {
           return {

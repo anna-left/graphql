@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
-import { IGenre, IGenreInput } from "./genre.interface";
+import { IGenre, IGenreInput, IGenreUpdate } from "./genre.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
 
 class GenreAPI extends RESTDataSource {
@@ -41,25 +41,24 @@ class GenreAPI extends RESTDataSource {
     return { ...data, id: data._id };
   }
 
-  async updateGenre(id: string, genreData: IGenreInput) {
+  async updateGenre(genreData: IGenreUpdate) {
     // console.log("updateGenre  id ---", id);
-    const genre = await this.getGenre(id);
+    const genre = await this.getGenre(genreData.id);
     // console.log("updateGenre genre ---", genre);
     if (!genre) {
-      console.log(`Could not find genre with ID ${id}`);
+      console.log(`Could not find genre with ID ${genreData.id}`);
       return null;
     }
     // console.log("updateGenre(genre ---", genreData);
     const updGenre = {
-      id,
-      _id: id,
+      id: genreData.id,
       name: genreData.name || genre.name,
       description: genreData.description || genre.description,
       country: genreData.country || genre.country,
       year: genreData.year || genre.year,
     };
-    // console.log("updGenre --- ", updGenre);
-    const data = await this.put(`genres/${id}`, updGenre);
+    console.log("updGenre new --- ", updGenre);
+    const data = await this.put(`genres/${genre.id}`, updGenre);
     return { ...data, id: data._id };
   }
 

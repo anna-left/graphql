@@ -9,4 +9,8 @@ interface IGenre extends IGenreInput {
   _id: string;
 }
 
-export { IGenre, IGenreInput };
+interface IGenreUpdate extends IGenreInput {
+  id: string;
+}
+
+export { IGenre, IGenreInput, IGenreUpdate };
