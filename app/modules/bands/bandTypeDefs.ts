@@ -5,19 +5,47 @@ export default gql`
     id: ID!
     name: String
     origin: String
-    # members: [Member]
-    members: [Artist]
+    members: [Member]
     website: String
     genres: [Genre]
   }
-  # input BandInput {
+
+  type Member {
+    artist: String
+    instrument: String
+    years: String
+  }
+
+  input MemberInput {
+    artist: String
+    instrument: String
+    years: String
+  }
+
+  input BandInput {
+    id: ID!
+    name: String
+    origin: String
+    members: [MemberInput]
+    website: String
+    genresIds: [String]
+  }
+
+  input CreateBandInput {
+    name: String
+    origin: String
+    members: [MemberInput]
+    website: String
+    genres: [GenreInput]
+  }
+
+  # input UpdateBandInput {
   #   id: ID!
   #   name: String
   #   origin: String
-  #   # members: [Member]
-  #   members: [Artist]
+  #   membersId: [String]
   #   website: String
-  #   genres: [Genre]
+  #   genresIds: [String]
   # }
 
   extend type Query {
@@ -26,40 +54,17 @@ export default gql`
   }
 
   type Mutation {
-    # createBand(
-    #   name: String
-    #   origin: String
-    #   # members: [Member]
-    #   members: [Artist]
-    #   website: String # genres: [Genre]
-    # ): createBandResponse!
-
-    # updateBand(
-    #   id: ID!
-    #   name: String
-    #   origin: String
-    #   # members: [Member]
-    #   members: [Artist]
-    #   website: String
-    #   genres: [Genre]
-    # ): updateBandResponse!
-
+    createBand(createBandInput: CreateBandInput): BandResponse!
+    updateBand(updateBandInput: BandInput): BandResponse!
     deleteBand(id: ID!): deleteBandResponse!
   }
 
-  # type createBandResponse {
-  #   code: Int!
-  #   success: Boolean!
-  #   message: String!
-  #   band: Band
-  # }
-
-  # type updateBandResponse {
-  #   code: Int!
-  #   success: Boolean!
-  #   message: String!
-  #   band: Band
-  # }
+  type BandResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    band: Band
+  }
 
   type deleteBandResponse {
     code: Int!

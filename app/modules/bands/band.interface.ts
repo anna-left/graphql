@@ -1,10 +1,22 @@
-interface IBand {
-  _id: string;
+interface IBandInput {
   name: string;
   origin: string;
-  membersId: string[];
+  membersId: IMember[];
   website: string;
   genresIds: string[];
 }
 
-export { IBand };
+interface IBand extends IBandInput {
+  _id: string;
+}
+
+interface IBandUpdate extends IBandInput {
+  id: string;
+}
+
+interface IMember {
+  artist: string;
+  instrument: string;
+  years: string;
+}
+export { IBand, IBandInput, IBandUpdate, IMember };

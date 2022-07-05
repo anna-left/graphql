@@ -9,6 +9,14 @@ export default gql`
     year: Int
   }
 
+  input GenreInput {
+    id: ID!
+    name: String!
+    description: String
+    country: String
+    year: Int
+  }
+
   input CreatGenreInput {
     name: String!
     description: String
@@ -48,13 +56,6 @@ export default gql`
     message: String!
     genre: Genre
   }
-
-  # type updateGenreResponse {
-  #   code: Int!
-  #   success: Boolean!
-  #   message: String!
-  #   genre: Genre
-  # }
 
   type deleteGenreResponse {
     code: Int!

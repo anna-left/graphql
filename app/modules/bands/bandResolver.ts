@@ -1,5 +1,7 @@
+import { GLOBAL_VALUES } from "../../utils/constants";
 import { IArtist } from "../artists/artist.interface";
 import { IGenre } from "../genres/genre.interface";
+import { IBandUpdate } from "./band.interface";
 
 const bandResolver = {
   Query: {
@@ -42,39 +44,123 @@ const bandResolver = {
       return Promise.all(arrPromises);
     },
   },
-  // Mutation: {
-  //   deleteBand: async (
-  //     _: string,
-  //     { id }: { id: string },
-  //     { dataSources }: { dataSources: any }
-  //   ) => {
-  //     try {
-  //       const answer = await dataSources.bandAPI.deleteBand(id);
-  //       // console.log("answer ---", answer);
-  //       if (!answer || !answer.deletedCount) {
-  //         return {
-  //           code: 404,
-  //           success: false,
-  //           message: "Not Found ",
-  //           id,
-  //         };
-  //       }
-  //       return {
-  //         code: 200,
-  //         success: true,
-  //         message: `Successfully deleted band ${id}`,
-  //         id,
-  //       };
-  //     } catch (err: any) {
-  //       return {
-  //         code: err.extensions.response.status,
-  //         success: false,
-  //         message: err.extensions.response.body,
-  //         id: "",
-  //       };
-  //     }
-  //   },
-  // },
+  Mutation: {
+    createBand: async (
+      _: string,
+      {
+        createBandInput,
+      }: {
+        createBandInput: IBandUpdate;
+      },
+      { dataSources }: { dataSources: any }
+    ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          band: null,
+        };
+      }
+      try {
+        console.log("createBandInput ---", createBandInput);
+        const band = await dataSources.bandAPI.createBand(createBandInput);
+        // console.log("band ---", band);
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully created band ${band.name}`,
+          band,
+        };
+      } catch (err: any) {
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          band: null,
+        };
+      }
+    },
+    updateBand: async (
+      _: string,
+      { updateBandInput }: { updateBandInput: IBandUpdate },
+      { dataSources }: { dataSources: any }
+    ) => {
+      console.log("bandInput ---", updateBandInput);
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          band: null,
+        };
+      }
+      try {
+        const band = await dataSources.bandAPI.updateBand(updateBandInput);
+        if (!band) {
+          return {
+            code: 404,
+            success: false,
+            message: "Not Found ",
+            id: band,
+          };
+        }
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully updated band ${band.name}`,
+          band,
+        };
+      } catch (err: any) {
+        // console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          band: null,
+        };
+      }
+    },
+    deleteBand: async (
+      _: string,
+      { id }: { id: string },
+      { dataSources }: { dataSources: any }
+    ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          id: "",
+        };
+      }
+      try {
+        const answer = await dataSources.bandAPI.deleteBand(id);
+        // console.log("answer ---", answer);
+        if (!answer || !answer.deletedCount) {
+          return {
+            code: 404,
+            success: false,
+            message: "Not Found ",
+            id,
+          };
+        }
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully deleted band ${id}`,
+          id,
+        };
+      } catch (err: any) {
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          id: "",
+        };
+      }
+    },
+  },
 };
 
 export { bandResolver };
