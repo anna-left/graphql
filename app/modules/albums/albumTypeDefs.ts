@@ -13,34 +13,23 @@ export default gql`
   }
 
   input AlbumInput {
-    id: ID
+    id: ID!
     name: String
     released: Int
-    artists: [ArtistInput]
-    bands: [BandInput]
-    tracks: [TrackInput]
-    genres: [GenreInput]
+    artistsIds: [String]
+    bandsIds: [String]
+    trackIds: [String]
+    genresIds: [String]
     image: String
   }
 
   input CreateAlbumInput {
     name: String
     released: Int
-    artists: [ArtistInput]
-    bands: [BandInput]
-    tracks: [TrackInput]
-    genres: [GenreInput]
-    image: String
-  }
-
-  input UpdateAlbumInput {
-    id: ID
-    name: String
-    released: Int
-    artists: [ArtistInput]
-    bands: [BandInput]
-    tracks: [TrackInput]
-    genres: [GenreInput]
+    artistsIds: [String]
+    bandsIds: [String]
+    trackIds: [String]
+    genresIds: [String]
     image: String
   }
 
@@ -50,19 +39,12 @@ export default gql`
   }
 
   type Mutation {
-    createAlbum(albumInput: CreateAlbumInput): createAlbumResponse!
-    updateAlbum(albumInput: UpdateAlbumInput): updateAlbumResponse!
+    createAlbum(createAlbumInput: CreateAlbumInput): albumResponse!
+    updateAlbum(updateAlbumInput: AlbumInput): albumResponse!
     deleteAlbum(id: ID!): deleteAlbumResponse!
   }
 
-  type createAlbumResponse {
-    code: Int!
-    success: Boolean!
-    message: String!
-    album: Album
-  }
-
-  type updateAlbumResponse {
+  type albumResponse {
     code: Int!
     success: Boolean!
     message: String!

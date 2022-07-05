@@ -57,7 +57,7 @@ class ArtistAPI extends RESTDataSource {
       birthPlace: artistData.birthPlace || artist.birthPlace,
       country: artistData.country || artist.country,
       bandsIds: artistData.bandsIds || artist.bandsIds,
-      // genresIds: artistData.genresIds || artist.genres,
+      // instruments: artistData.instruments || artist.instruments,
     };
     console.log("updArtist new --- ", updArtist);
     const data = await this.put(`artists/${artist.id}`, updArtist);

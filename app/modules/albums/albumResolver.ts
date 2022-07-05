@@ -1,7 +1,7 @@
 import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
-import { IAlbumInput } from "../albums/album.interface";
+import { IAlbumUpdate } from "../albums/album.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
 
 const albumResolver = {
@@ -70,20 +70,20 @@ const albumResolver = {
   Mutation: {
     createAlbum: async (
       _: string,
-      { albumInput }: { albumInput: IAlbumInput },
+      { createAlbumInput }: { createAlbumInput: IAlbumUpdate },
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
           success: false,
-          message: `Access denied for unauthorized users`,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
           album: null,
         };
       }
       try {
-        console.log("newAlbum ---", albumInput);
-        const album = await dataSources.albumAPI.createAlbum(albumInput);
+        console.log("createAlbum ---", createAlbumInput);
+        const album = await dataSources.albumAPI.createAlbum(createAlbumInput);
         console.log("album ---", album);
         return {
           code: 200,
@@ -98,6 +98,86 @@ const albumResolver = {
           success: false,
           message: err.extensions.response.body,
           album: null,
+        };
+      }
+    },
+
+    updateAlbum: async (
+      _: string,
+      { updateAlbumInput }: { updateAlbumInput: IAlbumUpdate },
+      { dataSources }: { dataSources: any }
+    ) => {
+      console.log("albumInput ---", updateAlbumInput);
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          album: null,
+        };
+      }
+      try {
+        const album = await dataSources.albumAPI.updateAlbum(updateAlbumInput);
+        if (!album) {
+          return {
+            code: 404,
+            success: false,
+            message: "Not Found ",
+            id: album,
+          };
+        }
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully updated album ${album.name}`,
+          album,
+        };
+      } catch (err: any) {
+        // console.log("---err", err);
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          album: null,
+        };
+      }
+    },
+    deleteAlbum: async (
+      _: string,
+      { id }: { id: string },
+      { dataSources }: { dataSources: any }
+    ) => {
+      if (!GLOBAL_VALUES.token) {
+        return {
+          code: 403,
+          success: false,
+          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
+          id: "",
+        };
+      }
+      try {
+        const answer = await dataSources.albumAPI.deleteAlbum(id);
+        // console.log("answer ---", answer);
+        if (!answer || !answer.deletedCount) {
+          return {
+            code: 404,
+            success: false,
+            message: "Not Found ",
+            id,
+          };
+        }
+        return {
+          code: 200,
+          success: true,
+          message: `Successfully deleted album ${id}`,
+          id,
+        };
+      } catch (err: any) {
+        return {
+          code: err.extensions.response.status,
+          success: false,
+          message: err.extensions.response.body,
+          id: "",
         };
       }
     },

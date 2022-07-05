@@ -1,7 +1,9 @@
 import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
+import { IArtist } from "../artists/artist.interface";
 import { ITrackUpdate } from "../tracks/track.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
+import { IAlbum } from "../albums/album.interface";
 
 const trackResolver = {
   Query: {
@@ -32,6 +34,17 @@ const trackResolver = {
       }
       return Promise.all(arrPromises);
     },
+    artists: (
+      { artistsIds }: { artistsIds: string[] },
+      _: string,
+      { dataSources }: { dataSources: any }
+    ) => {
+      const arrPromises: IArtist[] = [];
+      for (let i = 0; i < artistsIds.length; i++) {
+        arrPromises.push(dataSources.artistAPI.getArtist(artistsIds[i]));
+      }
+      return Promise.all(arrPromises);
+    },
     bands: (
       { bandsIds }: { bandsIds: string[] },
       _: string,
@@ -41,6 +54,18 @@ const trackResolver = {
       for (let i = 0; i < bandsIds.length; i++) {
         arrPromises.push(dataSources.bandAPI.getBand(bandsIds[i]));
       }
+      return Promise.all(arrPromises);
+    },
+    album: (
+      { albumId }: { albumId: string },
+      _: string,
+      { dataSources }: { dataSources: any }
+    ) => {
+      if (!albumId) {
+        return;
+      }
+      const arrPromises: IAlbum[] = [];
+      arrPromises.push(dataSources.albumAPI.getAlbum(albumId));
       return Promise.all(arrPromises);
     },
   },

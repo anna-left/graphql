@@ -21,13 +21,18 @@ class TrackAPI extends RESTDataSource {
 
   async getTrack(trackID: string) {
     console.log("id ---", trackID);
-    const data = await this.get(`tracks/${trackID}`);
-    console.log("data --- ", data);
-    if (!data) {
-      console.log(`Could not find track with ID ${trackID}`);
-      return;
+    try {
+      const data = await this.get(`tracks/${trackID}`);
+      console.log("data --- ", data);
+      if (!data) {
+        console.log(`Could not find track with ID ${trackID}`);
+        return;
+      }
+      return { ...data, id: data._id };
+    } catch (error) {
+      console.log(`Could not find album with ID ${trackID}`);
+      return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
     }
-    return { ...data, id: data._id };
   }
 
   async createTrack(track: ITrackInput) {
@@ -45,6 +50,7 @@ class TrackAPI extends RESTDataSource {
       return null;
     }
     // console.log("updateTrack ---", track);
+
     const updTrack = {
       // id: trackData.id,
       id: trackData.id,

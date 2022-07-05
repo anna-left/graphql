@@ -11,5 +11,8 @@ interface IAlbumInput {
 interface IAlbum extends IAlbumInput {
   _id: string;
 }
+interface IAlbumUpdate extends IAlbumInput {
+  id: string;
+}
 
-export { IAlbum, IAlbumInput };
+export { IAlbum, IAlbumInput, IAlbumUpdate };

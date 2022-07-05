@@ -37,11 +37,7 @@ const artistResolver = {
   Mutation: {
     createArtist: async (
       _: string,
-      {
-        createArtistInput,
-      }: {
-        createArtistInput: IArtistUpdate;
-      },
+      { createArtistInput }: { createArtistInput: IArtistUpdate },
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
