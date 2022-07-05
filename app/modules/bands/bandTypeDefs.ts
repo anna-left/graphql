@@ -39,15 +39,6 @@ export default gql`
     genres: [GenreInput]
   }
 
-  # input UpdateBandInput {
-  #   id: ID!
-  #   name: String
-  #   origin: String
-  #   membersId: [String]
-  #   website: String
-  #   genresIds: [String]
-  # }
-
   extend type Query {
     bands(limit: Int, offset: Int): [Band!]!
     band(id: ID!): Band!

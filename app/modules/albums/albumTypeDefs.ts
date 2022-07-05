@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Album {
-    id: ID
+    id: ID!
     name: String
     released: Int
     artists: [Artist]
@@ -12,13 +12,24 @@ export default gql`
     image: String
   }
 
+  input AlbumInput {
+    id: ID
+    name: String
+    released: Int
+    artists: [ArtistInput]
+    bands: [BandInput]
+    tracks: [TrackInput]
+    genres: [GenreInput]
+    image: String
+  }
+
   input CreateAlbumInput {
     name: String
     released: Int
-    artistsIds: [String]
-    bandsIds: [String]
-    tracksIds: [String]
-    genresIds: [String]
+    artists: [ArtistInput]
+    bands: [BandInput]
+    tracks: [TrackInput]
+    genres: [GenreInput]
     image: String
   }
 
@@ -26,10 +37,10 @@ export default gql`
     id: ID
     name: String
     released: Int
-    artistsIds: [String]
-    bandsIds: [String]
-    tracksIds: [String]
-    genresIds: [String]
+    artists: [ArtistInput]
+    bands: [BandInput]
+    tracks: [TrackInput]
+    genres: [GenreInput]
     image: String
   }
 
@@ -40,9 +51,7 @@ export default gql`
 
   type Mutation {
     createAlbum(albumInput: CreateAlbumInput): createAlbumResponse!
-
     updateAlbum(albumInput: UpdateAlbumInput): updateAlbumResponse!
-
     deleteAlbum(id: ID!): deleteAlbumResponse!
   }
 

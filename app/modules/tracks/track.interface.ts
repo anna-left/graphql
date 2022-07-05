@@ -10,5 +10,8 @@ interface ITrackInput {
 interface ITrack extends ITrackInput {
   _id: string;
 }
+interface ITrackUpdate extends ITrackInput {
+  id: string;
+}
 
-export { ITrack, ITrackInput };
+export { ITrack, ITrackInput, ITrackUpdate };

@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
-import { ITrack, ITrackInput } from "./track.interface";
+import { ITrack, ITrackInput, ITrackUpdate } from "./track.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
 
 class TrackAPI extends RESTDataSource {
@@ -11,7 +11,6 @@ class TrackAPI extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
-    console.log("GLOBAL_VALUES.token ---", GLOBAL_VALUES.token);
     request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
@@ -37,25 +36,28 @@ class TrackAPI extends RESTDataSource {
     return { ...data, id: data._id };
   }
 
-  async updateTrack(trackData: ITrack) {
-    const findTrack = await this.getTrack(trackData._id);
-    console.log("updateTrack track ---", findTrack);
-    if (!findTrack) {
-      console.log(`Could not find track with ID ${trackData._id}`);
+  async updateTrack(trackData: ITrackUpdate) {
+    console.log("trackData.id ---", trackData);
+    const track = await this.getTrack(trackData.id);
+    console.log("updateTrack track ---", track);
+    if (!track) {
+      console.log(`Could not find track with ID ${trackData.id}`);
       return null;
     }
-    // console.log("updateTrack ---", findTrack);
+    // console.log("updateTrack ---", track);
     const updTrack = {
-      id: trackData._id,
-      _id: trackData._id,
-      title: trackData.title || findTrack.title,
-      duration: trackData.duration || findTrack.duration,
-      released: trackData.released || findTrack.released,
-      albumId: trackData.albumId || findTrack.albumId,
+      // id: trackData.id,
+      id: trackData.id,
+      title: trackData.title || track.title,
+      albumId: trackData.albumId || track.albumId,
+      artistsIds: trackData.artistsIds || track.artistsIds,
+      duration: trackData.duration || track.duration,
+      released: trackData.released || track.released,
+      genresIds: trackData.genresIds || track.genresIds,
     };
 
-    console.log("updateTrack(track ---", updTrack);
-    const data = await this.put(`tracks/${findTrack._id}`, updTrack);
+    console.log("updateTrack new ---", updTrack);
+    const data = await this.put(`tracks/${trackData.id}`, updTrack);
     return { ...data, id: data._id };
   }
 

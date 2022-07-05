@@ -1,6 +1,6 @@
 import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
-import { ITrackInput } from "../tracks/track.interface";
+import { ITrackUpdate } from "../tracks/track.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
 
 const trackResolver = {
@@ -47,7 +47,7 @@ const trackResolver = {
   Mutation: {
     createTrack: async (
       _: string,
-      { trackInput }: { trackInput: ITrackInput },
+      { createTrackInput }: { createTrackInput: ITrackUpdate },
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
@@ -59,9 +59,9 @@ const trackResolver = {
         };
       }
       try {
-        console.log("newTrack ---", trackInput);
-        const track = await dataSources.trackAPI.createTrack(trackInput);
-        console.log("track ---", track);
+        console.log("createTrackInput ---", createTrackInput);
+        const track = await dataSources.trackAPI.createTrack(createTrackInput);
+        // console.log("track ---", track);
         return {
           code: 200,
           success: true,
@@ -69,7 +69,6 @@ const trackResolver = {
           track,
         };
       } catch (err: any) {
-        console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -80,9 +79,10 @@ const trackResolver = {
     },
     updateTrack: async (
       _: string,
-      { trackInput }: { trackInput: ITrackInput },
+      { updateTrackInput }: { updateTrackInput: ITrackUpdate },
       { dataSources }: { dataSources: any }
     ) => {
+      console.log("trackInput ---", updateTrackInput);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -92,18 +92,13 @@ const trackResolver = {
         };
       }
       try {
-        // const newTrack = { name, description, country, year };
-        // console.log("newTrack ---", newTrack);
-        // const track = await dataSources.trackAPI.updateTrack(id, newTrack);
-        console.log("trackInput ---", trackInput);
-        const track = await dataSources.trackAPI.updateTrack(trackInput);
-        // console.log("answer ---", answer);
+        const track = await dataSources.trackAPI.updateTrack(updateTrackInput);
         if (!track) {
           return {
             code: 404,
             success: false,
             message: "Not Found ",
-            track,
+            id: track,
           };
         }
         return {

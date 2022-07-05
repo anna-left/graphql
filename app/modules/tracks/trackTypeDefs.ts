@@ -12,21 +12,21 @@ export default gql`
     genres: [Genre]
   }
 
-  input CreateTrackInput {
+  input TrackInput {
+    id: ID!
     title: String!
-    album: Album
-    artists: [Artist]
+    albumId: String
+    artistsIds: [String]
     bandsIds: [String]
     duration: Int
     released: Int
     genresIds: [String]
   }
 
-  input UpdateTrackInput {
-    id: ID!
+  input CreateTrackInput {
     title: String!
-    album: Album
-    artists: [Artist]
+    albumId: String
+    artistsIds: [String]
     bandsIds: [String]
     duration: Int
     released: Int
@@ -39,21 +39,12 @@ export default gql`
   }
 
   type Mutation {
-    createTrack(trackInput: CreateTrackInput): createTrackResponse!
-
-    updateTrack(trackInput: UpdateTrackInput): updateTrackResponse!
-
+    createTrack(createTrackInput: CreateTrackInput): TrackResponse!
+    updateTrack(updateTrackInput: TrackInput): TrackResponse!
     deleteTrack(id: ID!): deleteTrackResponse!
   }
 
-  type createTrackResponse {
-    code: Int!
-    success: Boolean!
-    message: String!
-    track: Track
-  }
-
-  type updateTrackResponse {
+  type TrackResponse {
     code: Int!
     success: Boolean!
     message: String!
