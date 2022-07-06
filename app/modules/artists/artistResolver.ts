@@ -1,3 +1,4 @@
+import { checkDateValidity } from "../../utils/checkDateValidity";
 import { GLOBAL_VALUES } from "../../utils/constants";
 import {
   reportAccessDenied,
@@ -54,7 +55,26 @@ const artistResolver = {
           artist: null,
         };
       }
+      // const str = createArtistInput.birthDate;
+      // const re = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g;
+      // const found = str.match(re);
+      // if (!found || found.length !== 1) {
+      //   return {
+      //     code: 400,
+      //     success: false,
+      //     message: "Date is not valid",
+      //     artist: null,
+      //   };
+      // }
+      // console.log("--- found ---", found);
+
       try {
+        const answerDateValidity = checkDateValidity(
+          createArtistInput.birthDate
+        );
+        if (answerDateValidity) {
+          return answerDateValidity;
+        }
         console.log("createArtistInput ---", createArtistInput);
         const artist = await dataSources.artistAPI.createArtist(
           createArtistInput
@@ -90,6 +110,12 @@ const artistResolver = {
         };
       }
       try {
+        const answerDateValidity = checkDateValidity(
+          updateArtistInput.birthDate
+        );
+        if (answerDateValidity) {
+          return answerDateValidity;
+        }
         const artist = await dataSources.artistAPI.updateArtist(
           updateArtistInput
         );
