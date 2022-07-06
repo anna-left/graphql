@@ -40,8 +40,8 @@ export default gql`
   }
 
   extend type Query {
-    bands(limit: Int, offset: Int): [Band!]!
-    band(id: ID!): Band!
+    bands(limit: Int, offset: Int): [Band]
+    band(id: ID!): Band
   }
 
   type Mutation {

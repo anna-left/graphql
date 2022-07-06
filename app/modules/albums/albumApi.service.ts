@@ -29,7 +29,7 @@ class AlbumAPI extends RESTDataSource {
       }
       return { ...data, id: data._id };
     } catch (error) {
-      console.log(`Could not find album with ID ${albumID}`);
+      console.log(`err Could not find album with ID ${albumID}`);
       return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
     }
   }
@@ -42,13 +42,18 @@ class AlbumAPI extends RESTDataSource {
 
   async updateAlbum(albumData: IAlbumUpdate) {
     console.log("albumData.id ---", albumData);
-    const album = await this.getAlbum(albumData.id);
+    let album: any;
+    try {
+      album = await this.getAlbum(albumData.id);
+    } catch (error) {
+      return null;
+    }
     console.log("updateAlbum album ---", album);
-    if (!album) {
+    if (!album || album.id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
       console.log(`Could not find album with ID ${albumData.id}`);
       return null;
     }
-    // console.log("updateAlbum ---", album);
+
     const updAlbum = {
       id: albumData.id,
       name: albumData.name || album.name,
@@ -67,7 +72,7 @@ class AlbumAPI extends RESTDataSource {
 
   async deleteAlbum(id: string) {
     const album = await this.getAlbum(id);
-    if (!album) {
+    if (!album || album.id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
       console.log(`Could not find album with ID ${id}`);
       return null;
     }

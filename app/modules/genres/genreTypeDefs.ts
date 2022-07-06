@@ -33,8 +33,8 @@ export default gql`
   }
 
   extend type Query {
-    genres(limit: Int, offset: Int): [Genre!]!
-    genre(id: ID!): Genre!
+    genres(limit: Int, offset: Int): [Genre]
+    genre(id: ID!): Genre
   }
 
   type Mutation {

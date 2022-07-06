@@ -34,8 +34,8 @@ export default gql`
   }
 
   extend type Query {
-    albums(limit: Int, offset: Int): [Album!]!
-    album(id: ID!): Album!
+    albums(limit: Int, offset: Int): [Album]
+    album(id: ID!): Album
   }
 
   type Mutation {

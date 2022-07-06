@@ -3,6 +3,12 @@ import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
 import { IAlbumUpdate } from "../albums/album.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
+import {
+  reportAccessDenied,
+  reportNotFound,
+  reportRemoval,
+  reportError,
+} from "../../utils/reportAnswers";
 
 const albumResolver = {
   Query: {
@@ -118,12 +124,13 @@ const albumResolver = {
       }
       try {
         const album = await dataSources.albumAPI.updateAlbum(updateAlbumInput);
+        console.log("answer API --- ", album);
         if (!album) {
           return {
             code: 404,
             success: false,
             message: "Not Found ",
-            id: album,
+            album: null,
           };
         }
         return {
@@ -148,37 +155,17 @@ const albumResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
-        return {
-          code: 403,
-          success: false,
-          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
-          id: "",
-        };
+        return reportAccessDenied();
       }
       try {
         const answer = await dataSources.albumAPI.deleteAlbum(id);
         // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
-          return {
-            code: 404,
-            success: false,
-            message: "Not Found ",
-            id,
-          };
+          return reportNotFound(id);
         }
-        return {
-          code: 200,
-          success: true,
-          message: `Successfully deleted album ${id}`,
-          id,
-        };
+        return reportRemoval(id);
       } catch (err: any) {
-        return {
-          code: err.extensions.response.status,
-          success: false,
-          message: err.extensions.response.body,
-          id: "",
-        };
+        return reportError(err);
       }
     },
   },

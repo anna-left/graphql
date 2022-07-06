@@ -11,14 +11,9 @@ export default gql`
   }
 
   extend type Query {
-    favourites(limit: Int, offset: Int): [Favourite!]!
-    favourite(id: ID!): Favourite!
+    favourites(limit: Int, offset: Int): [Favourite]
+    favourite(id: ID!): Favourite
   }
-
-  # input CreateFavourite {
-  #   id: String
-  #   type: String
-  # }
 
   type Mutation {
     addTrackToFavourites(id: ID!): FavouriteResponse
