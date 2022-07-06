@@ -15,12 +15,12 @@ export default gql`
 
   input ArtistInput {
     id: ID!
-    firstName: String!
-    secondName: String!
+    firstName: String
+    secondName: String
     middleName: String
     birthDate: String
     birthPlace: String
-    country: String!
+    country: String
     bandsIds: [String]
     instruments: [String]
   }

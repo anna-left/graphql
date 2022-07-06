@@ -1,4 +1,7 @@
 function checkDateValidity(date: string) {
+  if (!date) {
+    return;
+  }
   const re = /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g;
   const found = date.match(re);
   if (!found || found.length !== 1) {
