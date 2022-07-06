@@ -18,12 +18,17 @@ class UserAPI extends RESTDataSource {
   }
 
   async getUser(userID: string) {
-    const data: IUser = await this.get(`users/${userID}`);
-    if (!data) {
-      console.log(`Could not find user with ID ${userID}`);
+    try {
+      const data: IUser = await this.get(`users/${userID}`);
+      if (!data) {
+        console.log(`Could not find user with ID ${userID}`);
+        return;
+      }
+      return { ...data, id: data._id };
+    } catch (error) {
+      console.log(`Could not find album with ID ${userID}`);
       return;
     }
-    return { ...data, id: data._id };
   }
 
   async getUserByToken() {

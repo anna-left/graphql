@@ -21,12 +21,17 @@ class FavouriteAPI extends RESTDataSource {
   }
 
   async getIFavourite(favouriteID: string) {
-    const data = await this.get(`favourites/${favouriteID}`);
-    if (!data) {
-      console.log(`Could not find favourite with ID ${favouriteID}`);
+    try {
+      const data = await this.get(`favourites/${favouriteID}`);
+      if (!data) {
+        console.log(`Could not find favourite with ID ${favouriteID}`);
+        return;
+      }
+      return { ...data, id: data._id };
+    } catch (error) {
+      console.log(`Could not find album with ID ${favouriteID}`);
       return;
     }
-    return { ...data, id: data._id };
   }
 
   async addToFavourites(userID: string, dataFavourite: IFavouriteInput) {

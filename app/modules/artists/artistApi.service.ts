@@ -24,12 +24,17 @@ class ArtistAPI extends RESTDataSource {
   }
 
   async getArtist(artistID: string) {
-    const data = await this.get(`artists/${artistID}`);
-    if (!data) {
-      console.log(`Could not find artist with ID ${artistID}`);
+    try {
+      const data = await this.get(`artists/${artistID}`);
+      if (!data) {
+        console.log(`Could not find artist with ID ${artistID}`);
+        return;
+      }
+      return { ...data, id: data._id };
+    } catch (error) {
+      console.log(`Could not find album with ID ${artistID}`);
       return;
     }
-    return { ...data, id: data._id };
   }
 
   async createArtist(artist: IArtistInput) {

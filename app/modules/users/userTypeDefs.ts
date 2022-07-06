@@ -17,8 +17,8 @@ export default gql`
   }
 
   type Query {
-    user(id: ID!): User!
-    jwt: Jwt!
+    user(id: ID!): User
+    jwt: Jwt
   }
 
   type Mutation {
