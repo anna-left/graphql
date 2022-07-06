@@ -3,7 +3,8 @@ import { IGenre } from "../genres/genre.interface";
 import { IArtist } from "../artists/artist.interface";
 import { ITrackUpdate } from "../tracks/track.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
-import { IAlbum } from "../albums/album.interface";
+// import { IAlbum } from "../albums/album.interface";
+import { reportNotFound, reportRemoval } from "../../utils/reportAnswers";
 
 const trackResolver = {
   Query: {
@@ -56,7 +57,7 @@ const trackResolver = {
       }
       return Promise.all(arrPromises);
     },
-    album: (
+    album: async (
       { albumId }: { albumId: string },
       _: string,
       { dataSources }: { dataSources: any }
@@ -64,9 +65,9 @@ const trackResolver = {
       if (!albumId) {
         return;
       }
-      const arrPromises: IAlbum[] = [];
-      arrPromises.push(dataSources.albumAPI.getAlbum(albumId));
-      return Promise.all(arrPromises);
+      const album = await dataSources.albumAPI.getAlbum(albumId);
+      console.log("--- album ---", album);
+      return album;
     },
   },
   Mutation: {
@@ -159,19 +160,9 @@ const trackResolver = {
         const answer = await dataSources.trackAPI.deleteTrack(id);
         // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
-          return {
-            code: 404,
-            success: false,
-            message: "Not Found ",
-            id,
-          };
+          return reportNotFound(id);
         }
-        return {
-          code: 200,
-          success: true,
-          message: `Successfully deleted track ${id}`,
-          id,
-        };
+        return reportRemoval(id);
       } catch (err: any) {
         return {
           code: err.extensions.response.status,

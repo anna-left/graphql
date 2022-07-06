@@ -1,4 +1,5 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
+import { reportRemoval } from "../../utils/reportAnswers";
 import { IBand } from "../bands/band.interface";
 import { IArtistUpdate } from "./artist.interface";
 
@@ -92,7 +93,7 @@ const artistResolver = {
             code: 404,
             success: false,
             message: "Not Found ",
-            id: artist,
+            artist: null,
           };
         }
         return {
@@ -135,12 +136,7 @@ const artistResolver = {
             id,
           };
         }
-        return {
-          code: 200,
-          success: true,
-          message: `Successfully deleted artist ${id}`,
-          id,
-        };
+        return reportRemoval(id);
       } catch (err: any) {
         return {
           code: err.extensions.response.status,

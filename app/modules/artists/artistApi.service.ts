@@ -41,9 +41,14 @@ class ArtistAPI extends RESTDataSource {
 
   async updateArtist(artistData: IArtistUpdate) {
     console.log("updateArtist  artistData ---", artistData);
-    const artist = await this.getArtist(artistData.id);
+    let artist: any;
+    try {
+      artist = await this.getArtist(artistData.id);
+    } catch (error) {
+      return null;
+    }
     console.log("updateArtist artist ---", artist);
-    if (!artist) {
+    if (!artist || artist.id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
       console.log(`Could not find artist with ID ${artistData.id}`);
       return null;
     }
@@ -66,7 +71,7 @@ class ArtistAPI extends RESTDataSource {
 
   async deleteArtist(id: string) {
     const artist = await this.getArtist(id);
-    if (!artist) {
+    if (!artist || artist.id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
       console.log(`Could not find artist with ID ${id}`);
       return null;
     }

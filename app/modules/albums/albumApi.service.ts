@@ -25,12 +25,12 @@ class AlbumAPI extends RESTDataSource {
       const data = await this.get(`albums/${albumID}`);
       if (!data) {
         console.log(`Could not find album with ID ${albumID}`);
-        return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
+        return;
       }
       return { ...data, id: data._id };
     } catch (error) {
       console.log(`err Could not find album with ID ${albumID}`);
-      return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
+      return;
     }
   }
 

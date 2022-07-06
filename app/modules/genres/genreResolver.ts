@@ -1,4 +1,5 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
+import { reportRemoval } from "../../utils/reportAnswers";
 import { IGenreUpdate } from "./genre.interface";
 // import { IGenre } from "./genre.interface";
 
@@ -136,12 +137,7 @@ const genreResolver = {
             id,
           };
         }
-        return {
-          code: 200,
-          success: true,
-          message: `Successfully deleted genre ${id}`,
-          id,
-        };
+        return reportRemoval(id);
       } catch (err: any) {
         return {
           code: err.extensions.response.status,

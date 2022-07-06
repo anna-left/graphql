@@ -26,12 +26,12 @@ class GenreAPI extends RESTDataSource {
       console.log("data genre ---", data);
       if (!data._id || data._id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
         console.log(`Could not find genre with ID ${genreID}`);
-        return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
+        return;
       }
       return { ...data, id: data._id };
     } catch (error) {
       console.log(`Could not find genre with ID ${genreID}`);
-      return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
+      return;
     }
   }
 

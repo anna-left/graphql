@@ -1,4 +1,5 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
+import { reportRemoval } from "../../utils/reportAnswers";
 import { IArtist } from "../artists/artist.interface";
 import { IGenre } from "../genres/genre.interface";
 import { IBandUpdate } from "./band.interface";
@@ -145,12 +146,7 @@ const bandResolver = {
             id,
           };
         }
-        return {
-          code: 200,
-          success: true,
-          message: `Successfully deleted band ${id}`,
-          id,
-        };
+        return reportRemoval(id);
       } catch (err: any) {
         return {
           code: err.extensions.response.status,
