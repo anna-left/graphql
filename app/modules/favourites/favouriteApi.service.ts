@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
-import { IFavourite, IFavouriteInput } from "./favourite.interface";
+import { IFavouriteInput } from "./favourite.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
 // import { IGenreInput } from "../genres/genre.interface";
 
@@ -12,26 +12,16 @@ class FavouriteAPI extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
+    console.log(GLOBAL_VALUES.token);
     request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
   async getFavourites(limit = 0, offset = 0) {
-    const data = await this.get("favourites", { limit, offset });
-    return data.items.map((item: IFavourite) => ({ ...item, id: item._id }));
-  }
-
-  async getIFavourite(favouriteID: string) {
-    try {
-      const data = await this.get(`favourites/${favouriteID}`);
-      if (!data) {
-        console.log(`Could not find favourite with ID ${favouriteID}`);
-        return;
-      }
-      return { ...data, id: data._id };
-    } catch (error) {
-      console.log(`Could not find album with ID ${favouriteID}`);
-      return;
-    }
+    console.log("---", limit, offset);
+    const data = await this.get("favourites");
+    console.log("--- data --- ", data);
+    // return data.map((item: IFavourite) => ({ ...item, id: item._id }));
+    return { ...data, id: data._id };
   }
 
   async addToFavourites(userID: string, dataFavourite: IFavouriteInput) {

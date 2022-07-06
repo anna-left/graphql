@@ -11,8 +11,7 @@ export default gql`
   }
 
   extend type Query {
-    favourites(limit: Int, offset: Int): [Favourite]
-    favourite(id: ID!): Favourite
+    favourites(limit: Int, offset: Int): Favourite
   }
 
   type Mutation {

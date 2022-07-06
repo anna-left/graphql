@@ -11,15 +11,16 @@ const favouriteResolver = {
       { limit, offset }: { limit: number; offset: number },
       { dataSources }: { dataSources: any }
     ) => {
+      if (!GLOBAL_VALUES.token) {
+        return [
+          {
+            id: "Access denied for unauthorized users",
+            userId: "Access denied for unauthorized users",
+          },
+        ];
+      }
       console.log("---resolver");
       return dataSources.favouriteAPI.getFavourites(limit, offset);
-    },
-    favourite: (
-      _: string,
-      { id }: { id: string },
-      { dataSources }: { dataSources: any }
-    ) => {
-      return dataSources.favouriteAPI.getFavourite(id);
     },
   },
   Favourite: {

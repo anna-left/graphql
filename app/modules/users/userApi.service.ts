@@ -12,7 +12,6 @@ class UserAPI extends RESTDataSource {
 
   willSendRequest(request: RequestOptions) {
     if (GLOBAL_VALUES.token) {
-      // console.log("GLOBAL_VALUES.token --- ", GLOBAL_VALUES.token);
       request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
     }
   }
