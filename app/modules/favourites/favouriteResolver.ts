@@ -30,6 +30,7 @@ const favouriteResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       const arrPromises: IGenre[] = [];
+      console.log("--- genresIds ---", genresIds);
       for (let i = 0; i < genresIds.length; i++) {
         arrPromises.push(dataSources.genreAPI.getGenre(genresIds[i]));
       }
@@ -41,19 +42,21 @@ const favouriteResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       const arrPromises: IBand[] = [];
+      console.log("--- bandsIds ---", bandsIds);
       for (let i = 0; i < bandsIds.length; i++) {
         arrPromises.push(dataSources.bandAPI.getBand(bandsIds[i]));
       }
       return Promise.all(arrPromises);
     },
     tracks: (
-      { trackIds }: { trackIds: string[] },
+      { tracksIds }: { tracksIds: string[] },
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
       const arrPromises: ITrack[] = [];
-      for (let i = 0; i < trackIds.length; i++) {
-        arrPromises.push(dataSources.trackAPI.getTrack(trackIds[i]));
+      console.log("--- tracksIds ---", tracksIds);
+      for (let i = 0; i < tracksIds.length; i++) {
+        arrPromises.push(dataSources.trackAPI.getTrack(tracksIds[i]));
       }
       return Promise.all(arrPromises);
     },
@@ -63,6 +66,7 @@ const favouriteResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       const arrPromises: ITrack[] = [];
+      console.log("--- artistsIds ---", artistsIds);
       for (let i = 0; i < artistsIds.length; i++) {
         arrPromises.push(dataSources.artistAPI.getArtist(artistsIds[i]));
       }
@@ -88,6 +92,16 @@ const favouriteResolver = {
         };
       }
       try {
+        const genre = await dataSources.genreAPI.getGenre(id);
+        console.log("--- genre ---", genre);
+        if (!genre) {
+          return {
+            code: 404,
+            success: false,
+            message: `Not Found genre with ID ${id}`,
+            favourite: null,
+          };
+        }
         // console.log("newFavourite ---", id);
         const favourite = await dataSources.favouriteAPI.addToFavourites(
           userID,
@@ -131,6 +145,16 @@ const favouriteResolver = {
         };
       }
       try {
+        const track = await dataSources.trackAPI.getTrack(id);
+        console.log("--- track ---", track);
+        if (!track) {
+          return {
+            code: 404,
+            success: false,
+            message: `Not Found track with ID ${id}`,
+            favourite: null,
+          };
+        }
         console.log("newFavourite ---", id);
         const favourite = await dataSources.favouriteAPI.addToFavourites(
           userID,
@@ -174,6 +198,17 @@ const favouriteResolver = {
         };
       }
       try {
+        const band = await dataSources.bandAPI.getBand(id);
+        console.log("--- band ---", band);
+        if (!band) {
+          return {
+            code: 404,
+            success: false,
+            message: `Not Found band with ID ${id}`,
+            favourite: null,
+          };
+        }
+
         console.log("newFavourite ---", id);
         const favourite = await dataSources.favouriteAPI.addToFavourites(
           userID,
@@ -217,6 +252,16 @@ const favouriteResolver = {
         };
       }
       try {
+        const artist = await dataSources.artistAPI.getArtist(id);
+        console.log("--- artist ---", artist);
+        if (!artist) {
+          return {
+            code: 404,
+            success: false,
+            message: `Not Found artist with ID ${id}`,
+            favourite: null,
+          };
+        }
         console.log("newFavourite ---", id);
         const favourite = await dataSources.favouriteAPI.addToFavourites(
           userID,

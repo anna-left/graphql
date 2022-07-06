@@ -30,7 +30,7 @@ class BandAPI extends RESTDataSource {
       return { ...data, id: data._id };
       // return { ...data, id: data._id, membersId: members };
     } catch (error) {
-      console.log(`err Could not find album with ID ${bandID}`);
+      console.log(`Could not find album with ID ${bandID}`);
       return;
     }
   }

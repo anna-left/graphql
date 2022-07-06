@@ -25,6 +25,9 @@ class FavouriteAPI extends RESTDataSource {
   }
 
   async addToFavourites(userID: string, dataFavourite: IFavouriteInput) {
+    //**************TODO */
+    //проверить существует ли объект перед добавлением
+
     console.log("createFavourite ---", dataFavourite);
     console.log("userID ---", userID);
     const data = await this.put(`favourites/add?user=${userID}`, dataFavourite);
