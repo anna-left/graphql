@@ -4,7 +4,12 @@ import { IArtist } from "../artists/artist.interface";
 import { ITrackUpdate } from "../tracks/track.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
 // import { IAlbum } from "../albums/album.interface";
-import { reportNotFound, reportRemoval } from "../../utils/reportAnswers";
+import {
+  reportAccessDenied,
+  reportNotFound,
+  reportRemoval,
+  reportError,
+} from "../../utils/reportAnswers";
 
 const trackResolver = {
   Query: {
@@ -124,7 +129,7 @@ const trackResolver = {
             code: 404,
             success: false,
             message: "Not Found ",
-            id: track,
+            track: null,
           };
         }
         return {
@@ -149,12 +154,7 @@ const trackResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
-        return {
-          code: 403,
-          success: false,
-          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
-          id: "",
-        };
+        return reportAccessDenied();
       }
       try {
         const answer = await dataSources.trackAPI.deleteTrack(id);
@@ -164,12 +164,7 @@ const trackResolver = {
         }
         return reportRemoval(id);
       } catch (err: any) {
-        return {
-          code: err.extensions.response.status,
-          success: false,
-          message: err.extensions.response.body,
-          id: "",
-        };
+        return reportError(err);
       }
     },
   },

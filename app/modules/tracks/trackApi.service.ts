@@ -31,7 +31,7 @@ class TrackAPI extends RESTDataSource {
       return { ...data, id: data._id };
     } catch (error) {
       console.log(`Could not find album with ID ${trackID}`);
-      return GLOBAL_VALUES.OBJECT_NOT_EXISTS;
+      return;
     }
   }
 

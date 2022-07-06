@@ -1,5 +1,9 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
-import { reportRemoval } from "../../utils/reportAnswers";
+import {
+  reportAccessDenied,
+  reportNotFound,
+  reportRemoval,
+} from "../../utils/reportAnswers";
 import { IArtist } from "../artists/artist.interface";
 import { IGenre } from "../genres/genre.interface";
 import { IBandUpdate } from "./band.interface";
@@ -103,7 +107,7 @@ const bandResolver = {
             code: 404,
             success: false,
             message: "Not Found ",
-            id: band,
+            band: null,
           };
         }
         return {
@@ -128,32 +132,17 @@ const bandResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
-        return {
-          code: 403,
-          success: false,
-          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
-          id: "",
-        };
+        return reportAccessDenied();
       }
       try {
         const answer = await dataSources.bandAPI.deleteBand(id);
         // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
-          return {
-            code: 404,
-            success: false,
-            message: "Not Found ",
-            id,
-          };
+          return reportNotFound(id);
         }
         return reportRemoval(id);
       } catch (err: any) {
-        return {
-          code: err.extensions.response.status,
-          success: false,
-          message: err.extensions.response.body,
-          id: "",
-        };
+        return reportError(err);
       }
     },
   },

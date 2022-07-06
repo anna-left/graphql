@@ -1,6 +1,11 @@
 import { GLOBAL_VALUES } from "../../utils/constants";
-import { reportRemoval } from "../../utils/reportAnswers";
 import { IGenreUpdate } from "./genre.interface";
+import {
+  reportAccessDenied,
+  reportNotFound,
+  reportRemoval,
+  reportError,
+} from "../../utils/reportAnswers";
 // import { IGenre } from "./genre.interface";
 
 const genreResolver = {
@@ -94,7 +99,7 @@ const genreResolver = {
             code: 404,
             success: false,
             message: "Not Found ",
-            id: genre,
+            genre: null,
           };
         }
         return {
@@ -119,32 +124,17 @@ const genreResolver = {
       { dataSources }: { dataSources: any }
     ) => {
       if (!GLOBAL_VALUES.token) {
-        return {
-          code: 403,
-          success: false,
-          message: GLOBAL_VALUES.MESSAGE_ACCESS_DENIED,
-          id: "",
-        };
+        return reportAccessDenied();
       }
       try {
         const answer = await dataSources.genreAPI.deleteGenre(id);
         // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
-          return {
-            code: 404,
-            success: false,
-            message: "Not Found ",
-            id,
-          };
+          return reportNotFound(id);
         }
         return reportRemoval(id);
       } catch (err: any) {
-        return {
-          code: err.extensions.response.status,
-          success: false,
-          message: err.extensions.response.body,
-          id: "",
-        };
+        return reportError(err);
       }
     },
   },

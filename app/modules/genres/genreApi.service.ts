@@ -24,7 +24,7 @@ class GenreAPI extends RESTDataSource {
     try {
       const data = await this.get(`genres/${genreID}`);
       console.log("data genre ---", data);
-      if (!data._id || data._id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
+      if (!data._id) {
         console.log(`Could not find genre with ID ${genreID}`);
         return;
       }

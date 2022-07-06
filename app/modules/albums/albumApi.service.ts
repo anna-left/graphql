@@ -49,7 +49,7 @@ class AlbumAPI extends RESTDataSource {
       return null;
     }
     console.log("updateAlbum album ---", album);
-    if (!album || album.id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
+    if (!album) {
       console.log(`Could not find album with ID ${albumData.id}`);
       return null;
     }
@@ -72,7 +72,7 @@ class AlbumAPI extends RESTDataSource {
 
   async deleteAlbum(id: string) {
     const album = await this.getAlbum(id);
-    if (!album || album.id === GLOBAL_VALUES.MESSAGE_NOT_EXISTS) {
+    if (!album) {
       console.log(`Could not find album with ID ${id}`);
       return null;
     }
