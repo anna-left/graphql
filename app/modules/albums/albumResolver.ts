@@ -33,6 +33,9 @@ const albumResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!genresIds.length) {
+        return;
+      }
       const arrPromises: IGenre[] = [];
       for (let i = 0; i < genresIds.length; i++) {
         arrPromises.push(dataSources.genreAPI.getGenre(genresIds[i]));
@@ -44,6 +47,9 @@ const albumResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!bandsIds) {
+        return;
+      }
       const arrPromises: IBand[] = [];
       for (let i = 0; i < bandsIds.length; i++) {
         arrPromises.push(dataSources.bandAPI.getBand(bandsIds[i]));
@@ -55,6 +61,9 @@ const albumResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!trackIds) {
+        return;
+      }
       const arrPromises: ITrack[] = [];
       for (let i = 0; i < trackIds.length; i++) {
         arrPromises.push(dataSources.trackAPI.getTrack(trackIds[i]));
@@ -66,6 +75,9 @@ const albumResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!artistsIds) {
+        return;
+      }
       const arrPromises: ITrack[] = [];
       for (let i = 0; i < artistsIds.length; i++) {
         arrPromises.push(dataSources.artistAPI.getArtist(artistsIds[i]));

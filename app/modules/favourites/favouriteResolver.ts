@@ -28,7 +28,7 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
-      if (!genresIds.length) {
+      if (!genresIds) {
         return;
       }
       const arrPromises: IGenre[] = [];
@@ -43,7 +43,7 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
-      if (!bandsIds.length) {
+      if (!bandsIds) {
         return;
       }
       const arrPromises: IBand[] = [];
@@ -58,7 +58,7 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
-      if (!tracksIds.length) {
+      if (!tracksIds) {
         return;
       }
       const arrPromises: ITrack[] = [];
@@ -73,7 +73,7 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
-      if (!artistsIds.length) {
+      if (!artistsIds) {
         return;
       }
       const arrPromises: ITrack[] = [];

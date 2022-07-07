@@ -33,6 +33,9 @@ const artistResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!bandsIds) {
+        return;
+      }
       const arrPromises: IBand[] = [];
       for (let i = 0; i < bandsIds.length; i++) {
         arrPromises.push(dataSources.bandAPI.getBand(bandsIds[i]));

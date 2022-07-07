@@ -31,6 +31,9 @@ const bandResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!genresIds) {
+        return;
+      }
       const arrPromises: IGenre[] = [];
       for (let i = 0; i < genresIds.length; i++) {
         arrPromises.push(dataSources.genreAPI.getGenre(genresIds[i]));
@@ -42,6 +45,9 @@ const bandResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!membersId) {
+        return;
+      }
       const arrPromises: IArtist[] = [];
       for (let i = 0; i < membersId.length; i++) {
         arrPromises.push(dataSources.artistAPI.getArtist(membersId[i]));
