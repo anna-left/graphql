@@ -11,8 +11,8 @@ export default gql`
 
   type Jwt {
     id: ID!
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
     email: String!
   }
 
