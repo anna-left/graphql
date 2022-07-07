@@ -16,11 +16,13 @@ class FavouriteAPI extends RESTDataSource {
     request.headers.set("Authorization", `Bearer ${GLOBAL_VALUES.token}`);
   }
 
-  async getFavourites(limit = 0, offset = 0) {
-    console.log("---", limit, offset);
+  async getFavourites() {
+    console.log("---");
     const data = await this.get("favourites");
     console.log("--- data --- ", data);
-    // return data.map((item: IFavourite) => ({ ...item, id: item._id }));
+    if (!data) {
+      return;
+    }
     return { ...data, id: data._id };
   }
 

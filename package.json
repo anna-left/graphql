@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint \"{src,app,libs,test}/**/*.ts\" --fix",
-    "start": "ts-node ./app/index.ts",
-    "start:dev": "nodemon ./app/index.ts"
+    "start": "npm run kill && ts-node ./app/index.ts",
+    "start:dev": "npm run kill && nodemon ./app/index.ts",
+    "kill": "kill-port --port 4000"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "apollo-server": "^3.9.0",
     "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
+    "kill-port": "^2.0.1",
     "lodash": "^4.17.21",
     "mongodb": "^4.1.0"
   }

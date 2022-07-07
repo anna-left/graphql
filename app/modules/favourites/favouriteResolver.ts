@@ -2,7 +2,6 @@ import { IBand } from "../bands/band.interface";
 import { IGenre } from "../genres/genre.interface";
 import { ITrack } from "../tracks/track.interface";
 import { GLOBAL_VALUES } from "../../utils/constants";
-// import { IFavourite } from "./favourite.interface";
 
 const favouriteResolver = {
   Query: {
@@ -11,16 +10,16 @@ const favouriteResolver = {
       { limit, offset }: { limit: number; offset: number },
       { dataSources }: { dataSources: any }
     ) => {
+      console.log("---GLOBAL_VALUES.token --- ", GLOBAL_VALUES.token);
       if (!GLOBAL_VALUES.token) {
-        return [
-          {
-            id: "Access denied for unauthorized users",
-            userId: "Access denied for unauthorized users",
-          },
-        ];
+        return {
+          id: "Access denied for unauthorized users",
+          userId: "Access denied for unauthorized users",
+        };
       }
       console.log("---resolver");
-      return dataSources.favouriteAPI.getFavourites(limit, offset);
+      return dataSources.favouriteAPI.getFavourites();
+      console.log(limit, offset);
     },
   },
   Favourite: {
@@ -29,6 +28,9 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!genresIds.length) {
+        return;
+      }
       const arrPromises: IGenre[] = [];
       console.log("--- genresIds ---", genresIds);
       for (let i = 0; i < genresIds.length; i++) {
@@ -41,6 +43,9 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!bandsIds.length) {
+        return;
+      }
       const arrPromises: IBand[] = [];
       console.log("--- bandsIds ---", bandsIds);
       for (let i = 0; i < bandsIds.length; i++) {
@@ -53,6 +58,9 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!tracksIds.length) {
+        return;
+      }
       const arrPromises: ITrack[] = [];
       console.log("--- tracksIds ---", tracksIds);
       for (let i = 0; i < tracksIds.length; i++) {
@@ -65,6 +73,9 @@ const favouriteResolver = {
       _: string,
       { dataSources }: { dataSources: any }
     ) => {
+      if (!artistsIds.length) {
+        return;
+      }
       const arrPromises: ITrack[] = [];
       console.log("--- artistsIds ---", artistsIds);
       for (let i = 0; i < artistsIds.length; i++) {
