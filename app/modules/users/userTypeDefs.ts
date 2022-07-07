@@ -3,16 +3,16 @@ import { gql } from "apollo-server";
 export default gql`
   type User {
     id: ID!
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
     password: String!
     email: String!
   }
 
   type Jwt {
     id: ID!
-    firstName: String!
-    lastName: String!
+    firstName: String
+    lastName: String
     email: String!
   }
 
