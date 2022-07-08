@@ -19,7 +19,6 @@ class ArtistAPI extends RESTDataSource {
     return data.items.map((item: IArtist) => ({
       ...item,
       id: item._id,
-      instruments: item.instruments.join(" "),
     }));
   }
 
@@ -32,7 +31,7 @@ class ArtistAPI extends RESTDataSource {
       }
       return { ...data, id: data._id };
     } catch (error) {
-      console.log(`Could not find album with ID ${artistID}`);
+      console.log(`Could not find artist with ID ${artistID}`);
       return;
     }
   }
@@ -67,7 +66,7 @@ class ArtistAPI extends RESTDataSource {
       birthPlace: artistData.birthPlace || artist.birthPlace,
       country: artistData.country || artist.country,
       bandsIds: artistData.bandsIds || artist.bandsIds,
-      // instruments: artistData.instruments || artist.instruments,
+      instruments: artistData.instruments || artist.instruments,
     };
     console.log("updArtist new --- ", updArtist);
     const data = await this.put(`artists/${artist.id}`, updArtist);

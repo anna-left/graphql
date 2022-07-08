@@ -11,7 +11,7 @@ export default gql`
   }
 
   type Member {
-    artist: String
+    artist: Artist
     instrument: String
     years: String
   }
@@ -36,8 +36,20 @@ export default gql`
     origin: String
     members: [MemberInput]
     website: String
-    genres: [GenreInput]
+    genresIds: [String]
   }
+
+  # type Member {
+  #   artist: String
+  #   instrument: String
+  #   years: String
+  # }
+
+  # input MemberInput {
+  #   artist: String
+  #   instrument: String
+  #   years: String
+  # }
 
   extend type Query {
     bands(limit: Int, offset: Int): [Band]

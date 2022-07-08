@@ -5,8 +5,9 @@ import {
   reportRemoval,
 } from "../../utils/reportAnswers";
 import { IArtist } from "../artists/artist.interface";
+// import { IArtist } from "../artists/artist.interface";
 import { IGenre } from "../genres/genre.interface";
-import { IBandUpdate } from "./band.interface";
+import { IBand, IBandUpdate } from "./band.interface";
 
 const bandResolver = {
   Query: {
@@ -40,20 +41,38 @@ const bandResolver = {
       }
       return Promise.all(arrPromises);
     },
-    members: (
-      { membersId }: { membersId: string[] },
-      _: string,
+    members: async (
+      parent: IBand,
+      __: string,
       { dataSources }: { dataSources: any }
-    ) => {
-      if (!membersId) {
-        return;
-      }
-      const arrPromises: IArtist[] = [];
-      for (let i = 0; i < membersId.length; i++) {
-        arrPromises.push(dataSources.artistAPI.getArtist(membersId[i]));
-      }
-      return Promise.all(arrPromises);
-    },
+    ) =>
+      // { dataSources }: { dataSources: any }
+      {
+        // const arrMembers = [];
+        if (!parent.members) {
+          return;
+        }
+        console.log("parent.members --- ", parent.members);
+        // return parent.members;
+        const arrPromises: IArtist[] = [];
+        for (let i = 0; i < parent.members.length; i++) {
+          console.log("parent.members[i]._id --- ", parent.members[i].artist);
+          arrPromises.push(
+            dataSources.artistAPI.getArtist(parent.members[i].artist)
+          );
+        }
+        const artists = await Promise.all(arrPromises);
+        console.log(artists);
+        const bandMemers = [];
+        for (let i = 0; i < parent.members.length; i++) {
+          bandMemers.push({
+            artist: artists[i],
+            instrument: parent.members[i].instrument,
+            years: parent.members[i].years,
+          });
+        }
+        return bandMemers;
+      },
   },
   Mutation: {
     createBand: async (

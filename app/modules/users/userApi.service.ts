@@ -25,7 +25,7 @@ class UserAPI extends RESTDataSource {
       }
       return { ...data, id: data._id };
     } catch (error) {
-      console.log(`Could not find album with ID ${userID}`);
+      console.log(`Could not find user with ID ${userID}`);
       return;
     }
   }

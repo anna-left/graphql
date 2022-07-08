@@ -1,7 +1,7 @@
 interface IBandInput {
   name: string;
   origin: string;
-  membersId: IMember[];
+  members: IMember[];
   website: string;
   genresIds: string[];
 }

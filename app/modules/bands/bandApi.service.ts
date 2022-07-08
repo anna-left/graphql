@@ -28,9 +28,9 @@ class BandAPI extends RESTDataSource {
         return;
       }
       return { ...data, id: data._id };
-      // return { ...data, id: data._id, membersId: members };
+      // return { ...data, id: data._id, members: members };
     } catch (error) {
-      console.log(`Could not find album with ID ${bandID}`);
+      console.log(`Could not find band with ID ${bandID}`);
       return;
     }
   }
@@ -55,6 +55,7 @@ class BandAPI extends RESTDataSource {
       origin: bandData.origin || band.origin,
       website: bandData.website || band.website,
       genresIds: bandData.genresIds || band.genres,
+      members: bandData.members || band.members,
     };
     console.log("updBand new --- ", updBand);
     const data = await this.put(`bands/${band.id}`, updBand);
