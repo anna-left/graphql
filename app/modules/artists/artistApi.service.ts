@@ -37,21 +37,17 @@ class ArtistAPI extends RESTDataSource {
   }
 
   async createArtist(artist: IArtistInput) {
-    console.log("createArtist artist --- ", artist);
     const data = await this.post("artists", artist);
-    console.log("data --- ", data);
     return { ...data, id: data._id };
   }
 
   async updateArtist(artistData: IArtistUpdate) {
-    console.log("updateArtist  artistData ---", artistData);
     let artist: any;
     try {
       artist = await this.getArtist(artistData.id);
     } catch (error) {
       return null;
     }
-    console.log("updateArtist artist ---", artist);
     if (!artist) {
       console.log(`Could not find artist with ID ${artistData.id}`);
       return null;
@@ -68,7 +64,6 @@ class ArtistAPI extends RESTDataSource {
       bandsIds: artistData.bandsIds || artist.bandsIds,
       instruments: artistData.instruments || artist.instruments,
     };
-    console.log("updArtist new --- ", updArtist);
     const data = await this.put(`artists/${artist.id}`, updArtist);
     return { ...data, id: data._id };
   }

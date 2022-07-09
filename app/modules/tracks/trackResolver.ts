@@ -79,9 +79,7 @@ const trackResolver = {
       if (!albumId) {
         return;
       }
-      const album = await dataSources.albumAPI.getAlbum(albumId);
-      console.log("--- album ---", album);
-      return album;
+      return await dataSources.albumAPI.getAlbum(albumId);
     },
   },
   Mutation: {
@@ -99,9 +97,7 @@ const trackResolver = {
         };
       }
       try {
-        console.log("createTrackInput ---", createTrackInput);
         const track = await dataSources.trackAPI.createTrack(createTrackInput);
-        // console.log("track ---", track);
         return {
           code: 200,
           success: true,
@@ -122,7 +118,6 @@ const trackResolver = {
       { updateTrackInput }: { updateTrackInput: ITrackUpdate },
       { dataSources }: { dataSources: any }
     ) => {
-      console.log("trackInput ---", updateTrackInput);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -148,7 +143,6 @@ const trackResolver = {
           track,
         };
       } catch (err: any) {
-        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -167,7 +161,6 @@ const trackResolver = {
       }
       try {
         const answer = await dataSources.trackAPI.deleteTrack(id);
-        // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
           return reportNotFound(id);
         }

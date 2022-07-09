@@ -31,9 +31,7 @@ class UserAPI extends RESTDataSource {
   }
 
   async getUserByToken() {
-    // console.log("getUserByToken --- ");
     const data: IJwt = await this.post(`users/verify`);
-    console.log("data --- ", data);
     if (!data) {
       console.log(`Unable to verify user`);
       return;
@@ -42,17 +40,12 @@ class UserAPI extends RESTDataSource {
   }
 
   async registerUser(user: IUserInput) {
-    console.log("user ---", user);
     const data = await this.post("users/register", user);
-    console.log("---data", data);
     return { ...data, id: data._id };
   }
 
   async login(user: IUserInput) {
-    // console.log("dataUser ---", user);
     const data = await this.post("users/login", user);
-    // console.log("---data", data);
-
     return data.jwt;
   }
 }

@@ -20,7 +20,6 @@ class BandAPI extends RESTDataSource {
   }
 
   async getBand(bandID: string) {
-    // const { members, ...data } = await this.get(`bands/${bandID}`);
     try {
       const data = await this.get(`bands/${bandID}`);
       if (!data) {
@@ -28,7 +27,6 @@ class BandAPI extends RESTDataSource {
         return;
       }
       return { ...data, id: data._id };
-      // return { ...data, id: data._id, members: members };
     } catch (error) {
       console.log(`Could not find band with ID ${bandID}`);
       return;
@@ -41,9 +39,7 @@ class BandAPI extends RESTDataSource {
   }
 
   async updateBand(bandData: IBandUpdate) {
-    console.log("updateBand  bandData ---", bandData);
     const band = await this.getBand(bandData.id);
-    console.log("updateBand band ---", band);
     if (!band) {
       console.log(`Could not find band with ID ${bandData.id}`);
       return null;
@@ -57,7 +53,6 @@ class BandAPI extends RESTDataSource {
       genresIds: bandData.genresIds || band.genres,
       members: bandData.members || band.members,
     };
-    console.log("updBand new --- ", updBand);
     const data = await this.put(`bands/${band.id}`, updBand);
     return { ...data, id: data._id };
   }

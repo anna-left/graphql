@@ -51,9 +51,7 @@ const genreResolver = {
       }
       try {
         const newGenre = { name, description, country, year };
-        // console.log("newGenre ---", newGenre);
         const genre = await dataSources.genreAPI.createGenre(newGenre);
-        // console.log("genre ---", genre);
         return {
           code: 200,
           success: true,
@@ -61,7 +59,6 @@ const genreResolver = {
           genre,
         };
       } catch (err: any) {
-        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -75,9 +72,6 @@ const genreResolver = {
       { updateGenreInput }: { updateGenreInput: IGenreUpdate },
       { dataSources }: { dataSources: any }
     ) => {
-      // const newGenre = { name, description, country, year };
-      console.log("genreInput ---", updateGenreInput);
-      // console.log("id ---", id);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -87,13 +81,7 @@ const genreResolver = {
         };
       }
       try {
-        // const newGenre = { name, description, country, year };
-        // console.log("newGenre ---", newGenre);
-        // console.log("id ---", id);
-        // const genre = await dataSources.genreAPI.updateGenre(id, newGenre);
-        // console.log("genre ---", genre);
         const genre = await dataSources.genreAPI.updateGenre(updateGenreInput);
-        // console.log("answer ---", answer);
         if (!genre) {
           return {
             code: 404,
@@ -109,7 +97,6 @@ const genreResolver = {
           genre,
         };
       } catch (err: any) {
-        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -128,7 +115,6 @@ const genreResolver = {
       }
       try {
         const answer = await dataSources.genreAPI.deleteGenre(id);
-        // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
           return reportNotFound(id);
         }

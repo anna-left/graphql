@@ -20,10 +20,8 @@ class TrackAPI extends RESTDataSource {
   }
 
   async getTrack(trackID: string) {
-    console.log("id ---", trackID);
     try {
       const data = await this.get(`tracks/${trackID}`);
-      console.log("data --- ", data);
       if (!data) {
         console.log(`Could not find track with ID ${trackID}`);
         return;
@@ -36,23 +34,18 @@ class TrackAPI extends RESTDataSource {
   }
 
   async createTrack(track: ITrackInput) {
-    console.log("createTrack(track ---", track);
     const data = await this.post("tracks", track);
     return { ...data, id: data._id };
   }
 
   async updateTrack(trackData: ITrackUpdate) {
-    console.log("trackData.id ---", trackData);
     const track = await this.getTrack(trackData.id);
-    console.log("updateTrack track ---", track);
     if (!track) {
       console.log(`Could not find track with ID ${trackData.id}`);
       return null;
     }
-    // console.log("updateTrack ---", track);
 
     const updTrack = {
-      // id: trackData.id,
       id: trackData.id,
       title: trackData.title || track.title,
       albumId: trackData.albumId || track.albumId,
@@ -73,9 +66,6 @@ class TrackAPI extends RESTDataSource {
       console.log(`Could not find track with ID ${id}`);
       return null;
     }
-
-    //удалить ссылки в альбоме и в фаворите
-
     return await this.delete(`tracks/${id}`);
   }
 }

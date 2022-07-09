@@ -58,27 +58,6 @@ const server = new ApolloServer({
       favouriteAPI: new FavouriteAPI(),
     };
   },
-  context: async ({ req }) => {
-    const token = req.headers.authorization || "";
-    const userId = token.split(" ")[1]; // get the user name after 'Bearer '
-    return;
-    console.log("token-------", token);
-
-    console.log("userId-------", userId);
-    // if (userId) {
-    //   const PORT = Number(process.env.USER_PORT) || 3004;
-    //   const { data } = await axios
-    //     .get(`http://localhost:${PORT}/login/${userId}`)
-    //     .catch((error) => {
-    //       console.log("-----error", error);
-    //       // throw new AuthenticationError(error.message);
-    //     });
-    //   console.log("---data", data);
-    //   console.log("---data", data.id);
-    //   console.log("---data", data.role);
-    //   return { userId: data.id, userRole: data.role };
-    // }
-  },
 });
 
 server.listen().then(() => {

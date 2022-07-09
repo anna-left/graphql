@@ -100,9 +100,7 @@ const albumResolver = {
         };
       }
       try {
-        console.log("createAlbum ---", createAlbumInput);
         const album = await dataSources.albumAPI.createAlbum(createAlbumInput);
-        console.log("album ---", album);
         return {
           code: 200,
           success: true,
@@ -110,7 +108,6 @@ const albumResolver = {
           album,
         };
       } catch (err: any) {
-        console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -125,7 +122,6 @@ const albumResolver = {
       { updateAlbumInput }: { updateAlbumInput: IAlbumUpdate },
       { dataSources }: { dataSources: any }
     ) => {
-      console.log("albumInput ---", updateAlbumInput);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -136,7 +132,6 @@ const albumResolver = {
       }
       try {
         const album = await dataSources.albumAPI.updateAlbum(updateAlbumInput);
-        console.log("answer API --- ", album);
         if (!album) {
           return {
             code: 404,
@@ -152,7 +147,6 @@ const albumResolver = {
           album,
         };
       } catch (err: any) {
-        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -171,7 +165,6 @@ const albumResolver = {
       }
       try {
         const answer = await dataSources.albumAPI.deleteAlbum(id);
-        // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
           return reportNotFound(id);
         }

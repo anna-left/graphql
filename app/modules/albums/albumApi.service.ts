@@ -20,7 +20,6 @@ class AlbumAPI extends RESTDataSource {
   }
 
   async getAlbum(albumID: string) {
-    console.log("albumID --- ", albumID);
     try {
       const data = await this.get(`albums/${albumID}`);
       if (!data) {
@@ -29,26 +28,23 @@ class AlbumAPI extends RESTDataSource {
       }
       return { ...data, id: data._id };
     } catch (error) {
-      console.log(`err Could not find album with ID ${albumID}`);
+      console.log(`Could not find album with ID ${albumID}`);
       return;
     }
   }
 
   async createAlbum(album: IAlbumInput) {
-    console.log("createAlbum(album ---", album);
     const data = await this.post("albums", album);
     return { ...data, id: data._id };
   }
 
   async updateAlbum(albumData: IAlbumUpdate) {
-    console.log("albumData.id ---", albumData);
     let album: any;
     try {
       album = await this.getAlbum(albumData.id);
     } catch (error) {
       return null;
     }
-    console.log("updateAlbum album ---", album);
     if (!album) {
       console.log(`Could not find album with ID ${albumData.id}`);
       return null;
@@ -65,7 +61,6 @@ class AlbumAPI extends RESTDataSource {
       image: albumData.image || album.image,
     };
 
-    console.log("updateAlbum new ---", updAlbum);
     const data = await this.put(`albums/${albumData.id}`, updAlbum);
     return { ...data, id: data._id };
   }

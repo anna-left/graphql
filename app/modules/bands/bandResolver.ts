@@ -45,34 +45,27 @@ const bandResolver = {
       parent: IBand,
       __: string,
       { dataSources }: { dataSources: any }
-    ) =>
-      // { dataSources }: { dataSources: any }
-      {
-        // const arrMembers = [];
-        if (!parent.members) {
-          return;
-        }
-        console.log("parent.members --- ", parent.members);
-        // return parent.members;
-        const arrPromises: IArtist[] = [];
-        for (let i = 0; i < parent.members.length; i++) {
-          console.log("parent.members[i]._id --- ", parent.members[i].artist);
-          arrPromises.push(
-            dataSources.artistAPI.getArtist(parent.members[i].artist)
-          );
-        }
-        const artists = await Promise.all(arrPromises);
-        console.log(artists);
-        const bandMemers = [];
-        for (let i = 0; i < parent.members.length; i++) {
-          bandMemers.push({
-            artist: artists[i],
-            instrument: parent.members[i].instrument,
-            years: parent.members[i].years,
-          });
-        }
-        return bandMemers;
-      },
+    ) => {
+      if (!parent.members) {
+        return;
+      }
+      const arrPromises: IArtist[] = [];
+      for (let i = 0; i < parent.members.length; i++) {
+        arrPromises.push(
+          dataSources.artistAPI.getArtist(parent.members[i].artist)
+        );
+      }
+      const artists = await Promise.all(arrPromises);
+      const bandMemers = [];
+      for (let i = 0; i < parent.members.length; i++) {
+        bandMemers.push({
+          artist: artists[i],
+          instrument: parent.members[i].instrument,
+          years: parent.members[i].years,
+        });
+      }
+      return bandMemers;
+    },
   },
   Mutation: {
     createBand: async (
@@ -93,9 +86,7 @@ const bandResolver = {
         };
       }
       try {
-        console.log("createBandInput ---", createBandInput);
         const band = await dataSources.bandAPI.createBand(createBandInput);
-        // console.log("band ---", band);
         return {
           code: 200,
           success: true,
@@ -116,7 +107,6 @@ const bandResolver = {
       { updateBandInput }: { updateBandInput: IBandUpdate },
       { dataSources }: { dataSources: any }
     ) => {
-      console.log("bandInput ---", updateBandInput);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -142,7 +132,6 @@ const bandResolver = {
           band,
         };
       } catch (err: any) {
-        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -161,7 +150,6 @@ const bandResolver = {
       }
       try {
         const answer = await dataSources.bandAPI.deleteBand(id);
-        // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
           return reportNotFound(id);
         }

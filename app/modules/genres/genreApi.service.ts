@@ -20,10 +20,8 @@ class GenreAPI extends RESTDataSource {
   }
 
   async getGenre(genreID: string) {
-    console.log(`find genre with ID --- ${genreID}`);
     try {
       const data = await this.get(`genres/${genreID}`);
-      console.log("data genre ---", data);
       if (!data._id) {
         console.log(`Could not find genre with ID ${genreID}`);
         return;
@@ -36,20 +34,16 @@ class GenreAPI extends RESTDataSource {
   }
 
   async createGenre(genre: IGenreInput) {
-    // console.log("createGenre(genre ---", genre);
     const data = await this.post("genres", genre);
     return { ...data, id: data._id };
   }
 
   async updateGenre(genreData: IGenreUpdate) {
-    // console.log("updateGenre  id ---", id);
     const genre = await this.getGenre(genreData.id);
-    // console.log("updateGenre genre ---", genre);
     if (!genre) {
       console.log(`Could not find genre with ID ${genreData.id}`);
       return null;
     }
-    // console.log("updateGenre(genre ---", genreData);
     const updGenre = {
       id: genreData.id,
       name: genreData.name || genre.name,
@@ -57,7 +51,6 @@ class GenreAPI extends RESTDataSource {
       country: genreData.country || genre.country,
       year: genreData.year || genre.year,
     };
-    console.log("updGenre new --- ", updGenre);
     const data = await this.put(`genres/${genre.id}`, updGenre);
     return { ...data, id: data._id };
   }

@@ -66,11 +66,9 @@ const artistResolver = {
         if (answerDateValidity) {
           return answerDateValidity;
         }
-        console.log("createArtistInput ---", createArtistInput);
         const artist = await dataSources.artistAPI.createArtist(
           createArtistInput
         );
-        // console.log("artist ---", artist);
         return {
           code: 200,
           success: true,
@@ -91,7 +89,6 @@ const artistResolver = {
       { updateArtistInput }: { updateArtistInput: IArtistUpdate },
       { dataSources }: { dataSources: any }
     ) => {
-      console.log("artistInput ---", updateArtistInput);
       if (!GLOBAL_VALUES.token) {
         return {
           code: 403,
@@ -125,7 +122,6 @@ const artistResolver = {
           artist,
         };
       } catch (err: any) {
-        // console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -144,7 +140,6 @@ const artistResolver = {
       }
       try {
         const answer = await dataSources.artistAPI.deleteArtist(id);
-        // console.log("answer ---", answer);
         if (!answer || !answer.deletedCount) {
           return reportNotFound(id);
         }

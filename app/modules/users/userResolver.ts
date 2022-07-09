@@ -37,9 +37,7 @@ const userResolver = {
     ) => {
       try {
         const newUser = { firstName, lastName, password, email };
-        console.log("newUser ---", newUser);
         const user = await dataSources.userAPI.registerUser(newUser);
-        console.log("user ---", user);
         return {
           code: 200,
           success: true,
@@ -47,7 +45,6 @@ const userResolver = {
           user,
         };
       } catch (err: any) {
-        console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
@@ -69,10 +66,8 @@ const userResolver = {
     ) => {
       try {
         const jwt = await dataSources.userAPI.login({ password, email });
-        // console.log("jwtResolver ---", jwt);
 
         GLOBAL_VALUES.token = jwt;
-        // console.log("GLOBAL_VALUES.token---", GLOBAL_VALUES.token);
         return {
           code: 200,
           success: true,
@@ -80,7 +75,6 @@ const userResolver = {
           jwt,
         };
       } catch (err: any) {
-        console.log("---err", err);
         return {
           code: err.extensions.response.status,
           success: false,
