@@ -1,0 +1,49 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint \"{src,app,libs,test}/**/*.ts\" --fix",
+    "start": "npm run kill && ts-node ./app/index.ts",
+    "start:dev": "npm run kill && nodemon ./app/index.ts",
+    "kill": "kill-port --port 4000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anna-left/graphql.git"
+  },
+  "author": "anna-left",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anna-left/graphql/issues"
+  },
+  "homepage": "https://github.com/anna-left/graphql#readme",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.3.2",
+    "source-map-support": "^0.5.20",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.8.1",
+    "tsconfig-paths": "4.0.0",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "@apollo/space-kit": "^9.3.1",
+    "apollo-datasource-rest": "^3.6.1",
+    "apollo-server": "^3.9.0",
+    "dotenv": "^16.0.1",
+    "graphql": "^16.5.0",
+    "kill-port": "^2.0.1",
+    "lodash": "^4.17.21",
+    "mongodb": "^4.1.0"
+  }
+}
